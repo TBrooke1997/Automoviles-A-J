@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A&J Imports Motors — Vehículos y repuestos importados</title>
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">A&amp;J IMPORTS</div>
+    <nav class="nav-links">
+      <a href="#inicio" data-i18n="nav-inicio">Inicio</a>
+      <a href="#nosotros" data-i18n="nav-nosotros">Nosotros</a>
+      <a href="#catalogo" data-i18n="nav-catalogo">Catálogo</a>
+      <a href="#servicios" data-i18n="nav-servicios">Servicios</a>
+      <a href="#contacto" data-i18n="nav-contacto">Contacto</a>
+    </nav>
+    <div class="nav-controls">
+      <button id="langToggle" class="pill-toggle" title="Switch language">EN</button>
+      <button id="darkToggle" class="icon-toggle" title="Modo oscuro">🌙</button>
+      <a href="#contacto" class="btn btn-outline" data-i18n="nav-cta">Reservar test drive</a>
+    </div>
+    <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+  </div>
+</header>
+
+<section class="hero" id="inicio" data-edit-img="hero-bg">
+  <span class="hero-vertical">Importado · Certificado</span>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="eyebrow hero-eyebrow reveal" data-edit-text="hero-eyebrow">Vehículos importados de confianza</div>
+      <h1 class="reveal reveal-delay-1" data-edit-text="hero-h1">Importa tu próximo vehículo, sin complicaciones</h1>
+      <p class="reveal reveal-delay-2" data-edit-text="hero-p">Catálogo actualizado, garantía incluida y asesoría completa en cada etapa del proceso de importación.</p>
+      <a href="#catalogo" class="btn btn-dark reveal reveal-delay-3" data-i18n="hero-cta">Explorar catálogo</a>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <span>Vehículos importados</span>
+    <span>Repuestos originales</span>
+    <span>Garantía incluida</span>
+    <span>Envío a todo el país</span>
+    <span>Asesoría aduanal</span>
+    <span>Vehículos importados</span>
+    <span>Repuestos originales</span>
+    <span>Garantía incluida</span>
+    <span>Envío a todo el país</span>
+    <span>Asesoría aduanal</span>
+  </div>
+</div>
+
+<section id="nosotros">
+  <div class="wrap about">
+    <div class="about-imgs reveal">
+      <div class="img-main" data-edit-img="about-img-main"></div>
+      <div class="img-float" data-edit-img="about-img-float"></div>
+    </div>
+    <div>
+      <div class="eyebrow reveal" data-edit-text="about-eyebrow">Quiénes somos</div>
+      <h2 class="reveal reveal-delay-1" data-edit-text="about-h2">Sobre A&amp;J Imports</h2>
+      <p class="reveal reveal-delay-2" data-edit-text="about-p">Más de una década conectando clientes con vehículos y repuestos importados, con procesos claros y seguimiento en cada etapa del proceso.</p>
+      <div class="reveal reveal-delay-3">
+        <div class="feature-line">
+          <span class="feature-check"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span data-edit-text="about-feat-1">Selección de vehículos de lujo</span>
+        </div>
+        <div class="feature-line">
+          <span class="feature-check"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span data-edit-text="about-feat-2">Entrega rápida y seguimiento</span>
+        </div>
+        <a href="#contacto" class="btn btn-ghost" data-i18n="about-cta">Conocer más</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo">
+  <div class="wrap">
+    <div class="catalog-head reveal">
+      <div>
+        <div class="eyebrow" data-edit-text="cat-eyebrow">Recomendados para ti</div>
+        <h2 data-edit-text="cat-h2">Nuestra colección de vehículos premium</h2>
+      </div>
+    </div>
+
+    <div class="catalog-block reveal">
+      <div class="tabs">
+        <div class="tab active" data-i18n="tab-vehiculos">Vehículos</div>
+        <div class="tab" data-i18n="tab-repuestos">Repuestos</div>
+      </div>
+      <div class="chips">
+        <div class="chip" data-i18n="chip-tipo">Tipo</div>
+        <div class="chip" data-i18n="chip-precio">Precio</div>
+        <div class="chip" data-i18n="chip-marca">Marca</div>
+        <div class="chip" data-i18n="chip-nuevousado">Nuevo / usado</div>
+      </div>
+      <div class="grid" id="vehiclesGrid"></div>
+    </div>
+
+    <div class="catalog-block reveal">
+      <div class="tabs">
+        <div class="tab" data-i18n="tab-vehiculos">Vehículos</div>
+        <div class="tab active" data-i18n="tab-repuestos">Repuestos</div>
+      </div>
+      <div class="chips">
+        <div class="chip" data-i18n="chip-categoria">Categoría</div>
+        <div class="chip" data-i18n="chip-marcaveh">Marca del vehículo</div>
+        <div class="chip" data-i18n="chip-precio">Precio</div>
+      </div>
+      <div class="grid" id="partsGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="banner reveal" data-edit-img="banner-bg">
+      <div class="eyebrow hero-eyebrow" style="margin-bottom:16px;" data-edit-text="banner-eyebrow">Cotización fácil</div>
+      <h3 data-edit-text="banner-h3">Inicia tu proceso de importación aquí</h3>
+      <p data-edit-text="banner-p">Cotiza tu vehículo o repuesto en minutos, sin compromiso.</p>
+      <a href="#contacto" class="btn btn-light" data-i18n="banner-cta">Solicitar importación</a>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="services-head reveal">
+      <div class="eyebrow" data-i18n="serv-eyebrow">Recomendados</div>
+      <h2 data-i18n="serv-h2">Nuestros servicios de importación</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-item reveal">
+        <span class="num">01</span>
+        <div class="rule"></div>
+        <h4 data-edit-text="serv-1-h4">Precios competitivos</h4>
+        <p data-edit-text="serv-1-p">Tarifas claras y transparentes en cada importación, sin costos ocultos.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-1">
+        <span class="num">02</span>
+        <div class="rule"></div>
+        <h4 data-edit-text="serv-2-h4">Variedad de vehículos</h4>
+        <p data-edit-text="serv-2-p">Autos, carga, motos y maquinaria disponibles bajo pedido o en inventario.</p>
+      </div>
+      <div class="service-item reveal reveal-delay-2">
+        <span class="num">03</span>
+        <div class="rule"></div>
+        <h4 data-edit-text="serv-3-h4">Soporte 24/7</h4>
+        <p data-edit-text="serv-3-p">Acompañamiento durante todo el proceso de aduana y entrega.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="articles-head reveal">
+      <div>
+        <div class="eyebrow" data-edit-text="art-eyebrow">Últimos artículos</div>
+        <h2 data-edit-text="art-h2">Novedades del sector automotriz</h2>
+        <p data-edit-text="art-p">Guías y noticias sobre importación de vehículos y repuestos.</p>
+      </div>
+      <a href="#servicios" class="btn btn-ghost" data-i18n="btn-articles-cta">Nuestros servicios</a>
+    </div>
+    <div class="articles-grid" id="articlesGrid"></div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap contact">
+    <div class="reveal">
+      <div class="eyebrow" data-edit-text="contact-eyebrow">Contacto</div>
+      <h2 style="margin-bottom:30px;" data-edit-text="contact-h2">Hablémoslo</h2>
+      <form id="contactForm">
+        <div class="field"><label data-i18n="field-nombre">Nombre</label><input type="text" data-i18n-placeholder="ph-nombre" placeholder="Tu nombre"></div>
+        <div class="field"><label data-i18n="field-correo">Correo</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
+        <div class="field"><label data-i18n="field-telefono">Teléfono</label><input type="tel" placeholder="+58 000 0000000"></div>
+        <div class="field"><label data-i18n="field-mensaje">Mensaje</label><textarea data-i18n-placeholder="ph-mensaje" placeholder="Cuéntanos qué vehículo o repuesto buscas"></textarea></div>
+        <button type="submit" class="btn btn-dark" data-i18n="btn-enviar">Enviar</button>
+      </form>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="map-block" data-i18n="map-label">MAPA / UBICACIÓN</div>
+      <a href="#" class="btn btn-dark whatsapp-btn">WhatsApp Business</a>
+      <div class="socials">
+        <div class="social-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M18 3h-3a5 5 0 00-5 5v3H7v4h3v6h4v-6h3l1-4h-4V8a1 1 0 011-1h3z" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <div class="social-circle"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="#555"/></svg></div>
+        <div class="social-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-9.3 7.9v-5.6H8.4V12h2.3V9.9c0-2.3 1.4-3.6 3.5-3.6.9 0 1.9.2 1.9.2v2.2h-1.1c-1.1 0-1.4.7-1.4 1.4V12h2.4l-.4 2.3h-2v5.6A8 8 0 0020 12z" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="logo">A&amp;J IMPORTS</div>
+        <p data-i18n="footer-desc">Vehículos y repuestos importados, con garantía y soporte completo.</p>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer-col-links">Enlaces</h5>
+        <a href="#inicio" data-i18n="nav-inicio">Inicio</a>
+        <a href="#nosotros" data-i18n="nav-nosotros">Nosotros</a>
+        <a href="#servicios" data-i18n="nav-servicios">Servicios</a>
+        <a href="#" data-i18n="footer-blog">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer-col-support">Soporte</h5>
+        <a href="#catalogo" data-i18n="footer-precios">Precios</a>
+        <a href="#contacto" data-i18n="nav-contacto">Contacto</a>
+        <a href="#" data-i18n="footer-preguntas">Preguntas</a>
+      </div>
+      <div class="footer-col">
+        <h5 data-i18n="footer-col-follow">Síguenos</h5>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 A&amp;J Imports Motors C.A.</span>
+      <span><a href="#" data-i18n="footer-terms">Términos</a> &nbsp;|&nbsp; <a href="#" data-i18n="footer-privacy">Privacidad</a></span>
+    </div>
+  </div>
+</footer>
+
+<button id="editToggleBtn" title="Editar sitio">✎</button>
+<div id="editToolbar" style="display:none;">
+  <div class="et-title">Modo edición</div>
+  <button id="etSave" style="background:#fff;color:#111;">💾 Guardar cambios</button>
+  <button id="etExport" style="background:#0078ff;color:#fff;">⬇ Descargar HTML</button>
+  <button id="etReset" style="background:transparent;color:#ff6b6b;border:1px solid #442222;">↺ Restablecer</button>
+  <div id="editStatus">Clic en un texto para editarlo. Clic en una imagen para reemplazarla.</div>
+</div>
+<input type="file" id="imgFileInput" accept="image/*" style="display:none;">
+
+<script src="js/index.js"></script>
+
+</body>
+</html>

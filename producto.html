@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A&J Imports Motors — Detalle de producto</title>
+<link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo">A&amp;J IMPORTS</a>
+    <nav class="nav-links">
+      <a href="index.html#inicio" data-i18n="nav-inicio">Inicio</a>
+      <a href="index.html#catalogo" data-i18n="nav-catalogo">Catálogo</a>
+      <a href="index.html#servicios" data-i18n="nav-servicios">Servicios</a>
+      <a href="index.html#contacto" data-i18n="nav-contacto">Contacto</a>
+    </nav>
+    <div class="nav-controls">
+      <button id="langToggle" class="pill-toggle">EN</button>
+      <button id="darkToggle" class="icon-toggle">🌙</button>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <a href="index.html#catalogo" class="back-link"><span data-i18n="back-arrow">←</span> <span data-i18n="back-catalog">Volver al catálogo</span></a>
+
+    <div class="product">
+      <div>
+        <div class="gallery-main" id="galleryMain" data-slot="0"></div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <div>
+        <div class="product-meta" id="productMeta">Vehículos importados</div>
+        <h1 class="product-name" id="productName">—</h1>
+        <div class="rating-summary">
+          <span class="stars" id="headerStars">☆☆☆☆☆</span>
+          <span class="rating-count" id="headerCount">(0)</span>
+        </div>
+        <div class="product-price" id="productPrice">—</div>
+        <p class="product-desc" id="productDesc"></p>
+        <div class="product-actions">
+          <a href="index.html#contacto" class="btn btn-dark" id="ctaBtn">Reservar</a>
+          <a href="index.html#contacto" class="btn btn-ghost" data-i18n="ask-question">Hacer una pregunta</a>
+        </div>
+        <div class="spec-grid" id="specGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width:840px;">
+    <div class="eyebrow" data-i18n="rev-eyebrow">Opiniones</div>
+    <div class="reviews-head">
+      <h2 data-i18n="rev-h2">Lo que dicen nuestros clientes</h2>
+    </div>
+    <div class="reviews-summary">
+      <div class="reviews-avg" id="avgNumber">0.0</div>
+      <div class="reviews-avg-side">
+        <span class="stars" id="avgStars">☆☆☆☆☆</span>
+        <span class="rating-count" id="avgCount" data-i18n="based-on">Basado en 0 reseñas</span>
+      </div>
+    </div>
+
+    <div class="review-form">
+      <h3 data-i18n="rev-form-title">Deja tu opinión</h3>
+      <div class="field">
+        <label data-i18n="rev-rating">Tu calificación</label>
+        <div class="star-picker" id="starPicker">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+      </div>
+      <div class="field"><label data-i18n="rev-name">Nombre</label><input type="text" id="revName" data-i18n-placeholder="ph-nombre" placeholder="Tu nombre"></div>
+      <div class="field"><label data-i18n="rev-comment">Comentario</label><textarea id="revText" data-i18n-placeholder="ph-comment" placeholder="Cuéntanos tu experiencia..."></textarea></div>
+      <button class="btn btn-dark" id="submitReview" data-i18n="rev-submit">Enviar reseña</button>
+    </div>
+
+    <div class="review-list" id="reviewList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-bottom">
+    <span>© 2026 A&amp;J Imports Motors C.A.</span>
+    <span><a href="index.html" data-i18n="back-catalog">Volver al catálogo</a></span>
+  </div>
+</footer>
+
+<input type="file" id="imgFileInput" accept="image/*" style="display:none;">
+
+<script src="js/product.js"></script>
+</body>
+</html>
