@@ -39,8 +39,4 @@ Ambas páginas comparten el mismo sistema de diseño (variables de color en `:ro
 2. Haz clic en cualquier vehículo o repuesto del catálogo para ir a su ficha de producto.
 3. Para editar contenido de la landing, usa el botón ✎ en la esquina inferior derecha de `index.html`.
 
-## Notas técnicas
 
-- No requiere servidor, build step, ni dependencias — son archivos estáticos.
-- `localStorage` funciona una vez alojado en un dominio real; dentro de vistas previas en sandbox (como la de Claude.ai) puede no persistir entre recargas — usa "Descargar HTML" para no perder cambios ahí.
-- Los datos de vehículos/repuestos/artículos viven como arreglos JS al inicio de `js/index.js` y `js/product.js` — reemplázalos por tu inventario real o conéctalos a una API más adelante.
