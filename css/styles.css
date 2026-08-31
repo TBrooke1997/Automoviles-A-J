@@ -196,3 +196,261 @@ body.dark .img-placeholder {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--paper); }
 ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 4px; }
+
+/* ============================================================
+   12. SPLASH SCREEN (Preloader con logo completo)
+   Muestra el logo rectangular en tamaño grande,
+   luego se desvanece suavemente.
+   ============================================================ */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #ffffff; /* Fondo blanco para que el logo resalte */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .9s ease, visibility .9s ease;
+}
+
+.splash.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-logo {
+  width: 600px;
+  max-width: 85vw;
+  height: auto;
+  object-fit: contain;
+  animation: splash-fade-in 1s ease-out;
+}
+
+@keyframes splash-fade-in {
+  0%   { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Oculta el contenido hasta que termine el splash */
+body.loading main,
+body.loading header,
+body.loading footer {
+  visibility: hidden;
+}
+
+
+/* ============================================================
+   13. LOGO EN LA NAVBAR (completo, no circular)
+   Como el logo es rectangular, lo mostramos completo.
+   ============================================================ */
+.nav-logo {
+  width: 190px;
+  object-fit: contain;
+  transition: transform .3s ease;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .nav-logo {
+    height: 34px;
+  }
+}
+
+/* ============================================================
+   CARRUSEL CORREGIDO (Tamaño compacto)
+   ============================================================ */
+#vehiclesCarousel {
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px; /* Ajusta según el ancho máximo que prefieras para la tarjeta */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Pista que contiene todos los elementos */
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 100%;
+}
+
+/* Cada tarjeta individual del carrusel */
+.carousel-slide {
+  min-width: 100%;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+/* Tarjeta del carrusel - TAMAÑO REDUCIDO */
+.carousel-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  background: var(--card-bg);
+}
+
+@media (max-width: 768px) {
+  .carousel-card {
+    padding: 16px;
+  }
+}
+
+/* Grid interno: 2 columnas */
+.carousel-card .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .carousel-card .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .carousel-card .grid > div:last-child {
+    order: -1;
+  }
+}
+
+/* Columna izquierda: Información */
+.carousel-info h4 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ink);
+  display: inline-block;
+}
+
+.carousel-info .desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.carousel-info .price {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.carousel-info .stars {
+  display: flex;
+  gap: 3px;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+/* Columna derecha: Imagen + Botón */
+.carousel-image-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  background-size: cover !important;
+  background-position: center !important;
+  background-color: #d4d4d4;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.carousel-image:hover {
+  transform: scale(1.02);
+}
+
+.carousel-btn-ver-mas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.carousel-btn-ver-mas:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+  transform: translateY(-2px);
+}
+
+/* Botones de navegación del carrusel */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.carousel-nav-btn:hover {
+  background: var(--ink);
+  color: var(--on-accent);
+  border-color: var(--ink);
+}
+
+#carouselPrev {
+  left: 0;
+}
+
+#carouselNext {
+  right: 0;
+}
+
+/* Indicadores */
+#carouselIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+#carouselIndicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#carouselIndicators button.active {
+  background: var(--ink);
+  width: 24px;
+  border-radius: 5px;
+}

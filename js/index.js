@@ -1,514 +1,416 @@
 /* ============================================================
    A&J IMPORTS MOTORS — index.js
-   Lógica principal de la página de inicio.
-   
-   Secciones:
-     1. Datos del catálogo
-     2. Renderizado de contenido (cards + artículos)
-     3. Tabs del catálogo (Vehículos / Repuestos)
-     4. Animaciones de scroll (Reveal)
-     5. Formulario de contacto (demo)
-     6. Navegación móvil
-     7. Modo edición (CMS visual)
-     8. Sistema de idioma (ES / EN)
-     9. Modo oscuro (Dark / Light)
-    10. Inicialización
+   Versión con carrusel y enfoque en importación bajo pedido
    ============================================================ */
 
-
-/* ============================================================
-   1. DATOS DEL CATÁLOGO
-   ============================================================ */
+// 1. DATOS DEL CATÁLOGO (Vehículos de referencia)
 const vehicles = [
-  { id: "veh-0", name: "Toyota Hilux 2024",      meta: "12,000 km · 4x4",  price: "$38,900" },
-  { id: "veh-1", name: "Ford Ranger 2022",        meta: "28,500 km · 4x2",  price: "$29,700" },
-  { id: "veh-2", name: "Chevrolet Onix 2023",     meta: "9,200 km · Auto",  price: "$16,500" },
-  { id: "veh-3", name: "Kia Sportage 2023",       meta: "15,300 km · 4x2",  price: "$27,200" },
-  { id: "veh-4", name: "Nissan Frontier 2021",    meta: "41,000 km · 4x4",  price: "$24,900" },
-  { id: "veh-5", name: "Hyundai Tucson 2024",     meta: "6,800 km · Auto",  price: "$31,400" }
+  {
+    id: "veh-0",
+    name: "Toyota Hilux 2024",
+    meta: "12,000 km · 4x4 · Diésel",
+    price: "$38,900",
+    desc: "Camioneta doble cabina 4x4, único dueño, mantenimientos al día. Incluye garantía de fábrica vigente.",
+    images: ["https://placehold.co/800x600/d4d4d4/333333?text=Toyota+Hilux+2024"]
+  },
+  {
+    id: "veh-1",
+    name: "Ford Ranger 2022",
+    meta: "28,500 km · 4x2 · Gasolina",
+    price: "$29,700",
+    desc: "Pick-up confiable, ideal para trabajo y ciudad. Revisión mecánica reciente y neumáticos nuevos.",
+    images: ["https://placehold.co/800x600/c9c9c9/333333?text=Ford+Ranger+2022"]
+  },
+  {
+    id: "veh-2",
+    name: "Chevrolet Onix 2023",
+    meta: "9,200 km · Auto · Gasolina",
+    price: "$16,500",
+    desc: "Sedán económico, bajo kilometraje, ideal como primer vehículo. Equipamiento completo.",
+    images: ["https://placehold.co/800x600/b8b8b8/333333?text=Chevrolet+Onix+2023"]
+  },
+  {
+    id: "veh-3",
+    name: "Kia Sportage 2023",
+    meta: "15,300 km · 4x2 · Gasolina",
+    price: "$27,200",
+    desc: "SUV compacta, espaciosa y eficiente, perfecta para familia. Tecnología de seguridad avanzada.",
+    images: ["https://placehold.co/800x600/a8a8a8/333333?text=Kia+Sportage+2023"]
+  },
+  {
+    id: "veh-4",
+    name: "Nissan Frontier 2021",
+    meta: "41,000 km · 4x4 · Diésel",
+    price: "$24,900",
+    desc: "Camioneta robusta con buen historial de mantenimiento. Lista para cualquier terreno.",
+    images: ["https://placehold.co/800x600/9a9a9a/333333?text=Nissan+Frontier+2021"]
+  },
+  {
+    id: "veh-5",
+    name: "Hyundai Tucson 2024",
+    meta: "6,800 km · Auto · Gasolina",
+    price: "$31,400",
+    desc: "SUV casi nueva, equipamiento completo y bajo uso. Garantía extendida disponible.",
+    images: ["https://placehold.co/800x600/8a8a8a/333333?text=Hyundai+Tucson+2024"]
+  }
 ];
 
-const parts = [
-  { id: "part-0", name: "Filtro de aceite",       meta: "Compatible Toyota",    price: "$18"  },
-  { id: "part-1", name: "Pastillas de freno",      meta: "Compatible Ford",      price: "$46"  },
-  { id: "part-2", name: "Amortiguador",            meta: "Compatible Nissan",    price: "$120" },
-  { id: "part-3", name: "Correa de distribución",  meta: "Compatible Kia",       price: "$65"  },
-  { id: "part-4", name: "Batería 12V",             meta: "Compatible universal", price: "$95"  },
-  { id: "part-5", name: "Radiador",                meta: "Compatible Hyundai",   price: "$140" }
-];
+// ============================================================
+// CARRUSEL (Un vehículo a la vez, estructura corregida)
+// ============================================================
+let currentSlide = 0;
+let carouselInterval;
 
-const articles = [
-  { id: "art-0", date: "16 nov 2026", title: { es: "Cómo elegir el vehículo importado ideal",  en: "How to choose the ideal imported vehicle" } },
-  { id: "art-1", date: "15 nov 2026", title: { es: "Guía de aduanas para importación directa", en: "A customs guide to direct importing" } },
-  { id: "art-2", date: "14 nov 2026", title: { es: "Financiamiento para vehículos importados", en: "Financing options for imported vehicles" } }
-];
+function initCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const indicators = document.getElementById('carouselIndicators');
+  
+  if (!track) return;
 
+  // Generar slides con estructura de 2 columnas (Info izquierda, Imagen derecha)
+  track.innerHTML = vehicles.map(v => `
+    <div class="carousel-slide">
+      <div class="carousel-card">
+        <div class="grid">
+          <!-- Columna izquierda: Información -->
+          <div class="carousel-info">
+            <h4>${v.name}</h4>
+            <p class="desc">${v.desc}</p>
+            <div class="price">${v.price}</div>
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+          </div>
 
-/* ============================================================
-   2. RENDERIZADO DE CONTENIDO
-   Genera las cards de vehículos, repuestos y artículos
-   ============================================================ */
-
-/**
- * Genera el HTML de una card de producto
- * @param {Object} item - Datos del producto
- * @param {string} cta - Texto del botón (Reservar/Consultar)
- * @param {string} badgeTxt - Texto del badge (Oferta/Sale)
- * @returns {string} HTML de la card
- */
-function cardHTML(item, cta, badgeTxt) {
-  return `
-    <a class="card-link block text-inherit no-underline"
-       href="producto.html?id=${item.id}">
-      <div class="border border-line rounded-xl p-4 bg-card
-                  transition-all duration-400 hover:-translate-y-1.5
-                  hover:shadow-[0_22px_40px_-18px_rgba(0,0,0,.22)]
-                  hover:border-transparent">
-        <h4 class="text-[13px] font-bold mb-1"
-            data-edit-text="${item.id}-name">${item.name}</h4>
-        <div class="text-[10.5px] text-muted mb-3"
-             data-edit-text="${item.id}-meta">${item.meta}</div>
-        <div class="relative rounded-md overflow-hidden aspect-[4/3] mb-3.5
-                    bg-gradient-to-br from-[#d4d4d4] to-[#b8b8b8] img-placeholder"
-             data-edit-img="${item.id}-img">
-          <span class="absolute top-2 right-2 bg-accent text-on-accent
-                       text-[8px] font-extrabold tracking-wider px-2 py-1
-                       rounded-full">${badgeTxt}</span>
-        </div>
-        <div class="text-[17px] font-extrabold mb-3"
-             data-edit-text="${item.id}-price">${item.price}</div>
-        <button class="w-full inline-flex items-center justify-center py-2.5
-                       rounded-full text-[11px] font-bold bg-accent
-                       text-on-accent hover:opacity-85 transition-opacity"
-                type="button">${cta}</button>
-      </div>
-    </a>`;
-}
-
-/**
- * Renderiza todos los grids (vehículos, repuestos, artículos)
- * @param {string} lang - Idioma actual ('es' | 'en')
- */
-function renderContent(lang) {
-  const cta1 = lang === 'en' ? 'Book' : 'Reservar';
-  const cta2 = lang === 'en' ? 'Inquire' : 'Consultar';
-  const badgeTxt = lang === 'en' ? 'Sale' : 'Oferta';
-
-  // Vehículos
-  document.getElementById('vehiclesGrid').innerHTML =
-    vehicles.map(v => cardHTML(v, cta1, badgeTxt)).join('');
-
-  // Repuestos
-  document.getElementById('partsGrid').innerHTML =
-    parts.map(p => cardHTML(p, cta2, badgeTxt)).join('');
-
-  // Artículos
-  document.getElementById('articlesGrid').innerHTML =
-    articles.map(a => `
-      <div class="border border-line rounded-xl overflow-hidden bg-card
-                  transition-all duration-400 hover:-translate-y-1.5
-                  hover:shadow-[0_22px_40px_-18px_rgba(0,0,0,.2)]">
-        <div class="aspect-[16/10] bg-gradient-to-br from-[#d4d4d4] to-[#b8b8b8]
-                    img-placeholder"
-             data-edit-img="${a.id}-img"></div>
-        <div class="p-5">
-          <div class="text-[10px] font-bold tracking-wider text-muted mb-2.5
-                      uppercase"
-               data-edit-text="${a.id}-date">${a.date}</div>
-          <h4 class="text-[15px] font-bold leading-snug"
-              data-edit-text="${a.id}-title">${a.title[lang]}</h4>
+          <!-- Columna derecha: Imagen + Botón -->
+          <div class="carousel-image-col">
+            <a href="producto.html?id=${v.id}" class="carousel-image" style="background-image: url('${v.images[0]}')" title="Ver detalles de ${v.name}"></a>
+            <a href="producto.html?id=${v.id}" class="carousel-btn-ver-mas">
+              Ver más
+            </a>
+          </div>
         </div>
       </div>
-    `).join('');
+    </div>
+  `).join('');
+
+  // Generar indicadores
+  indicators.innerHTML = vehicles.map((_, i) => `
+    <button class="${i === 0 ? 'active' : ''}" data-slide="${i}" aria-label="Ir al slide ${i + 1}"></button>
+  `).join('');
+
+  updateCarousel();
+  startCarouselAuto();
 }
 
+function updateCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const indicators = document.querySelectorAll('#carouselIndicators button');
+  
+  if (!track) return;
 
-/* ============================================================
-   3. TABS DEL CATÁLOGO (Vehículos / Repuestos)
-   ============================================================ */
+  const totalSlides = vehicles.length;
+  
+  if (currentSlide >= totalSlides) currentSlide = 0;
+  if (currentSlide < 0) currentSlide = totalSlides - 1;
+
+  const offset = -currentSlide * 100;
+  track.style.transform = `translateX(${offset}%)`;
+
+  indicators.forEach((ind, i) => {
+    ind.classList.toggle('active', i === currentSlide);
+  });
+}
+
+function startCarouselAuto() {
+  carouselInterval = setInterval(() => {
+    currentSlide++;
+    updateCarousel();
+  }, 6000);
+}
+
+function stopCarouselAuto() {
+  clearInterval(carouselInterval);
+}
+
+// Event listeners del carrusel
+document.addEventListener('DOMContentLoaded', () => {
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      currentSlide--;
+      updateCarousel();
+      stopCarouselAuto();
+      startCarouselAuto();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      currentSlide++;
+      updateCarousel();
+      stopCarouselAuto();
+      startCarouselAuto();
+    });
+  }
+
+  // Clic en indicadores
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('#carouselIndicators button');
+    if (btn) {
+      currentSlide = parseInt(btn.dataset.slide);
+      updateCarousel();
+      stopCarouselAuto();
+      startCarouselAuto();
+    }
+  });
+});
+// 3. TABS
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    // Actualizar tab activo
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
-
-    // Mostrar/ocultar grids
+    
     const target = tab.dataset.tab;
-    document.getElementById('vehiclesGrid').classList.toggle('hidden', target !== 'vehicles');
-    document.getElementById('partsGrid').classList.toggle('hidden', target !== 'parts');
+    const vehiclesCarousel = document.getElementById('vehiclesCarousel');
+    const partsSection = document.getElementById('partsSection');
+    
+    if (target === 'vehicles') {
+      vehiclesCarousel.classList.remove('hidden');
+      partsSection.classList.add('hidden');
+      startCarouselAuto();
+    } else {
+      vehiclesCarousel.classList.add('hidden');
+      partsSection.classList.remove('hidden');
+      stopCarouselAuto();
+    }
   });
 });
 
+// 4. CONTROLES DEL CARRUSEL
+document.addEventListener('DOMContentLoaded', () => {
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      currentSlide--;
+      updateCarousel();
+      stopCarouselAuto();
+      startCarouselAuto();
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      currentSlide++;
+      updateCarousel();
+      stopCarouselAuto();
+      startCarouselAuto();
+    });
+  }
 
-/* ============================================================
-   4. ANIMACIONES DE SCROLL (Reveal on scroll)
-   Usa IntersectionObserver para añadir clase .in
-   ============================================================ */
-const scrollObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('in');
-      scrollObserver.unobserve(entry.target);
+  // Indicadores
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#carouselIndicators button')) {
+      const slide = parseInt(e.target.closest('button').dataset.slide);
+      currentSlide = slide;
+      updateCarousel();
+      stopCarouselAuto();
+      startCarouselAuto();
+    }
+  });
+});
+
+// 5. SCROLL REVEAL
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
     }
   });
 }, { threshold: 0.15 });
 
-document.querySelectorAll('.reveal, .service-item').forEach(el => {
-  scrollObserver.observe(el);
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.reveal, .service-card').forEach(el => io.observe(el));
 });
 
-
-/* ============================================================
-   5. FORMULARIO DE CONTACTO (Demo)
-   Simula envío. Integrar con Formspree/EmailJS para producción.
-   ============================================================ */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const btn = this.querySelector('button[type="submit"]');
-  btn.textContent = translations['form-sent'][currentLang];
-  setTimeout(() => {
-    btn.textContent = translations['btn-enviar'][currentLang];
-    this.reset();
-  }, 1800);
-});
-
-
-/* ============================================================
-   6. NAVEGACIÓN MÓVIL (Hamburguesa)
-   ============================================================ */
-document.querySelector('.nav-toggle').addEventListener('click', function() {
-  const links = document.querySelector('.nav-links');
-  const isOpen = links.style.display === 'flex';
-
-  if (isOpen) {
-    links.style.display = 'none';
-  } else {
-    links.style.cssText = `
-      display: flex;
-      position: absolute;
-      top: 64px;
-      left: 0;
-      right: 0;
-      background: #111;
-      flex-direction: column;
-      padding: 20px 24px;
-      gap: 18px;
-    `;
-  }
-});
-
-
-/* ============================================================
-   7. MODO EDICIÓN (CMS Visual sin base de datos)
-   Permite editar textos e imágenes, guardar en localStorage
-   y exportar el HTML modificado.
-   ============================================================ */
-const EDIT_KEY = 'ajSiteEdits';
-const editBtn = document.getElementById('editToggleBtn');
-const toolbar = document.getElementById('editToolbar');
-const fileInput = document.getElementById('imgFileInput');
-const statusEl = document.getElementById('editStatus');
-let activeImgTarget = null;
-let editModeOn = false;
-
-/** Carga los cambios guardados desde localStorage */
-function loadEdits() {
-  try { return JSON.parse(localStorage.getItem(EDIT_KEY) || '{}'); }
-  catch (e) { return {}; }
-}
-
-/** Aplica los cambios guardados al DOM */
-function applyEdits(edits) {
-  if (!edits) return;
-
-  // Aplicar textos
-  Object.entries(edits.texts || {}).forEach(([id, html]) => {
-    const el = document.querySelector(`[data-edit-text="${id}"]`);
-    if (el) el.innerHTML = html;
-  });
-
-  // Aplicar imágenes
-  Object.entries(edits.images || {}).forEach(([id, dataUrl]) => {
-    const el = document.querySelector(`[data-edit-img="${id}"]`);
-    if (el) {
-      el.style.backgroundImage = `url(${dataUrl})`;
-      el.style.backgroundSize = 'cover';
-      el.style.backgroundPosition = 'center';
-    }
-  });
-}
-
-/** Activa/desactiva el modo edición visual */
-function toggleEditMode(on) {
-  document.body.classList.toggle('edit-mode', on);
-  toolbar.style.display = on ? 'flex' : 'none';
-  document.querySelectorAll('[data-edit-text]').forEach(el => {
-    el.setAttribute('contenteditable', on ? 'true' : 'false');
-  });
-}
-
-// Toggle modo edición
-editBtn.addEventListener('click', () => {
-  editModeOn = !editModeOn;
-  toggleEditMode(editModeOn);
-});
-
-// Evitar navegación en cards mientras se edita
-document.addEventListener('click', (e) => {
-  if (editModeOn && e.target.closest('.card-link')) {
-    e.preventDefault();
-  }
-}, true);
-
-// Clic en imagen editable → abrir selector de archivo
-document.addEventListener('click', (e) => {
-  if (!editModeOn) return;
-  const target = e.target.closest('[data-edit-img]');
-  if (target) {
-    activeImgTarget = target;
-    fileInput.click();
-  }
-});
-
-// Procesar imagen seleccionada
-fileInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file || !activeImgTarget) return;
-
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    const dataUrl = ev.target.result;
-    activeImgTarget.style.backgroundImage = `url(${dataUrl})`;
-    activeImgTarget.style.backgroundSize = 'cover';
-    activeImgTarget.style.backgroundPosition = 'center';
-    activeImgTarget.dataset.pendingImg = dataUrl;
-    statusEl.textContent = 'Imagen actualizada. No olvides guardar o descargar.';
-  };
-  reader.readAsDataURL(file);
-  fileInput.value = '';
-});
-
-/** Recopila el estado actual del DOM (textos + imágenes) */
-function collectCurrentState() {
-  const texts = {};
-  document.querySelectorAll('[data-edit-text]').forEach(el => {
-    texts[el.getAttribute('data-edit-text')] = el.innerHTML;
-  });
-
-  const images = {};
-  document.querySelectorAll('[data-edit-img]').forEach(el => {
-    if (el.dataset.pendingImg) {
-      images[el.getAttribute('data-edit-img')] = el.dataset.pendingImg;
-    }
-  });
-
-  // Conservar imágenes guardadas previamente
-  const prev = loadEdits();
-  if (prev.images) {
-    Object.entries(prev.images).forEach(([id, url]) => {
-      if (!(id in images)) images[id] = url;
+// 6. FORMULARIO
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      const originalText = btn.textContent;
+      btn.textContent = translations['form-sent'][currentLang];
+      setTimeout(() => {
+        btn.textContent = originalText;
+        this.reset();
+      }, 1800);
     });
   }
+});
 
-  return { texts, images };
-}
-
-// Guardar cambios
-document.getElementById('etSave').addEventListener('click', () => {
-  const state = collectCurrentState();
-  try {
-    localStorage.setItem(EDIT_KEY, JSON.stringify(state));
-    statusEl.textContent = 'Cambios guardados en este navegador ✓';
-  } catch (e) {
-    statusEl.textContent = 'Error al guardar. Usa "Descargar HTML".';
+// 7. NAVEGACIÓN MÓVIL
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const isOpen = links.style.display === 'flex';
+      links.style.display = isOpen ? 'none' : 'flex';
+      if (!isOpen) {
+        links.classList.add('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-[#111]', 'p-5', 'gap-4');
+      } else {
+        links.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-[#111]', 'p-5', 'gap-4');
+      }
+    });
   }
 });
 
-// Restablecer todo
-document.getElementById('etReset').addEventListener('click', () => {
-  if (!confirm('¿Restablecer todos los textos e imágenes a su versión original?')) return;
-  try { localStorage.removeItem(EDIT_KEY); } catch (e) {}
-  location.reload();
-});
-
-// Exportar HTML
-document.getElementById('etExport').addEventListener('click', () => {
-  const clone = document.documentElement.cloneNode(true);
-  clone.querySelector('body').classList.remove('edit-mode');
-  clone.querySelectorAll('[data-edit-text]').forEach(el =>
-    el.removeAttribute('contenteditable')
-  );
-
-  const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-  const blob = new Blob([html], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'index.html';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  statusEl.textContent = 'HTML descargado con los cambios aplicados ✓';
-});
-
-
-/* ============================================================
-   8. SISTEMA DE IDIOMA (ES / EN)
-   Traducciones dinámicas usando atributos data-i18n
-   ============================================================ */
+// 8. TRADUCCIONES
 const translations = {
-  // Hero
-  'hero-eyebrow':  { es: "Vehículos importados de confianza", en: "Trusted imported vehicles" },
-  'hero-h1':       { es: "Importa tu próximo vehículo, sin complicaciones", en: "Import your next vehicle, hassle-free" },
-  'hero-p':        { es: "Catálogo actualizado, garantía incluida y asesoría completa en cada etapa del proceso de importación.", en: "An up-to-date catalog, included warranty, and full guidance through every step of the import process." },
-  'hero-cta':      { es: "Explorar catálogo", en: "Explore catalog" },
-
-  // About
+  'hero-eyebrow': { es: "Importación y comercialización integral", en: "Comprehensive import and distribution" },
+  'hero-h1': { es: "Tu aliado en importación de vehículos y autopartes", en: "Your partner in vehicle and auto parts import" },
+  'hero-p': { es: "Compra, venta, distribución y comercialización de vehículos nacionales e importados, maquinaria pesada, autopartes y servicios técnicos especializados. Importamos bajo pedido con garantía y asesoría completa.", en: "Purchase, sale, distribution and marketing of national and imported vehicles, heavy machinery, auto parts and specialized technical services. We import on request with warranty and full support." },
+  'hero-cta': { es: "Ver referencias", en: "View references" },
+  'hero-cta-2': { es: "Cotizar ahora", en: "Get a quote" },
   'about-eyebrow': { es: "Quiénes somos", en: "About us" },
-  'about-h2':      { es: "Sobre A&J Imports", en: "About A&J Imports" },
-  'about-p':       { es: "Más de una década conectando clientes con vehículos y repuestos importados, con procesos claros y seguimiento en cada etapa.", en: "Over a decade connecting customers with imported vehicles and parts, with clear processes and follow-up at every step." },
-  'about-feat-1':  { es: "Selección de vehículos de lujo", en: "Curated selection of premium vehicles" },
-  'about-feat-2':  { es: "Entrega rápida y seguimiento", en: "Fast delivery and follow-up" },
-  'about-cta':     { es: "Conocer más", en: "Learn more" },
-
-  // Catálogo
-  'cat-eyebrow':   { es: "Recomendados para ti", en: "Recommended for you" },
-  'cat-h2':        { es: "Nuestra colección de vehículos premium", en: "Our premium vehicle collection" },
+  'about-h2': { es: "A&J Imports Motors C.A.", en: "A&J Imports Motors C.A." },
+  'about-p': { es: "Empresa dedicada a la importación, exportación, distribución y comercialización de vehículos automotores, maquinaria pesada, autopartes y servicios técnicos especializados. Conectamos a nuestros clientes con las mejores marcas nacionales e internacionales.", en: "Company dedicated to the import, export, distribution and marketing of motor vehicles, heavy machinery, auto parts and specialized technical services. We connect our clients with the best national and international brands." },
+  'about-feat-1': { es: "Importación bajo pedido", en: "Import on request" },
+  'about-feat-2': { es: "Garantía y post-venta", en: "Warranty and after-sales" },
+  'about-feat-3': { es: "Asesoría integral", en: "Comprehensive consulting" },
+  'about-cta': { es: "Contáctanos", en: "Contact us" },
+  'serv-eyebrow': { es: "Nuestro objeto social", en: "Our business scope" },
+  'serv-h2': { es: "Servicios integrales del sector automotriz", en: "Comprehensive automotive services" },
+  'serv-veh-title': { es: "Vehículos Automotores", en: "Motor Vehicles" },
+  'serv-veh-desc': { es: "Compra, venta, distribución, comercialización, importación y exportación de todo tipo de vehículos: nacionales o importados, de carga, particulares, colectivos, motocicletas y vehículos eléctricos.", en: "Purchase, sale, distribution, marketing, import and export of all types of vehicles: national or imported, cargo, private, collective, motorcycles and electric vehicles." },
+  'serv-maq-title': { es: "Maquinaria Pesada", en: "Heavy Machinery" },
+  'serv-maq-desc': { es: "Importación y comercialización de maquinaria pesada, agrícola e industrial para todo tipo de proyectos y sectores productivos.", en: "Import and marketing of heavy, agricultural and industrial machinery for all types of projects and productive sectors." },
+  'serv-trans-title': { es: "Servicios de Transporte", en: "Transport Services" },
+  'serv-trans-desc': { es: "Prestamos servicio de transporte de vehículos pesados, transporte de personal y servicio de transporte ejecutivo con los más altos estándares de calidad.", en: "We provide heavy vehicle transport, personnel transport and executive transport services with the highest quality standards." },
+  'serv-part-title': { es: "Suministros y Autopartes", en: "Supplies and Auto Parts" },
+  'serv-part-desc': { es: "Importación, exportación, distribución y venta al mayor y detal de partes, piezas, repuestos, accesorios y herramientas automotrices y de motos de cualquier marca.", en: "Import, export, distribution and wholesale and retail sale of parts, pieces, spare parts, accessories and automotive and motorcycle tools of any brand." },
+  'serv-tec-title': { es: "Servicios Técnicos", en: "Technical Services" },
+  'serv-tec-desc': { es: "Prestación de servicios de mantenimiento preventivo y correctivo, mecánica general, latonería, pintura, escaneo electrónico, blindaje y servicios de post-venta.", en: "Provision of preventive and corrective maintenance services, general mechanics, bodywork, painting, electronic scanning, armor plating and after-sales services." },
+  'serv-rep-title': { es: "Representación y Alianzas", en: "Representation and Partnerships" },
+  'serv-rep-desc': { es: "Representación de marcas nacionales o extranjeras, gestión de concesionarios y establecimiento de alianzas comerciales estratégicas.", en: "Representation of national or foreign brands, dealership management and establishment of strategic business alliances." },
+  'cat-eyebrow': { es: "Importación bajo pedido", en: "Import on request" },
+  'cat-h2': { es: "Vehículos de referencia", en: "Reference vehicles" },
+  'cat-desc': { es: "Estos son ejemplos de vehículos que podemos importar para ti. Contáctanos y cotizamos el que necesites.", en: "These are examples of vehicles we can import for you. Contact us and we'll quote the one you need." },
   'tab-vehiculos': { es: "Vehículos", en: "Vehicles" },
-  'tab-repuestos': { es: "Repuestos", en: "Parts" },
-  'chip-tipo':     { es: "Tipo", en: "Type" },
-  'chip-precio':   { es: "Precio", en: "Price" },
-  'chip-marca':    { es: "Marca", en: "Brand" },
-  'chip-nuevousado': { es: "Nuevo / usado", en: "New / used" },
-
-  // Banner
-  'banner-eyebrow': { es: "Cotización fácil", en: "Easy quoting" },
-  'banner-h3':      { es: "Inicia tu proceso de importación aquí", en: "Start your import process here" },
-  'banner-p':       { es: "Cotiza tu vehículo o repuesto en minutos, sin compromiso.", en: "Get a quote for your vehicle or part in minutes, no commitment." },
-  'banner-cta':     { es: "Solicitar importación", en: "Request import" },
-
-  // Servicios
-  'serv-eyebrow': { es: "Recomendados", en: "Recommended" },
-  'serv-h2':      { es: "Nuestros servicios de importación", en: "Our import services" },
-  'serv-1-h4':    { es: "Precios competitivos", en: "Competitive pricing" },
-  'serv-1-p':     { es: "Tarifas claras y transparentes en cada importación, sin costos ocultos.", en: "Clear, transparent rates on every import, with no hidden costs." },
-  'serv-2-h4':    { es: "Variedad de vehículos", en: "Wide vehicle range" },
-  'serv-2-p':     { es: "Autos, carga, motos y maquinaria disponibles bajo pedido o en inventario.", en: "Cars, trucks, motorcycles and machinery available on request or in stock." },
-  'serv-3-h4':    { es: "Soporte 24/7", en: "24/7 support" },
-  'serv-3-p':     { es: "Acompañamiento durante todo el proceso de aduana y entrega.", en: "Support throughout the entire customs and delivery process." },
-
-  // Artículos
-  'art-eyebrow':      { es: "Últimos artículos", en: "Latest articles" },
-  'art-h2':           { es: "Novedades del sector automotriz", en: "Automotive industry news" },
-  'art-p':            { es: "Guías y noticias sobre importación de vehículos y repuestos.", en: "Guides and news on importing vehicles and parts." },
-  'btn-articles-cta': { es: "Nuestros servicios", en: "Our services" },
-
-  // Contacto
+  'tab-repuestos': { es: "Repuestos", en: "Auto Parts" },
+  'parts-title': { es: "¿Necesitas repuestos o autopartes?", en: "Need auto parts or supplies?" },
+  'parts-desc': { es: "Importamos y distribuimos partes, piezas, repuestos, accesorios y herramientas automotrices de cualquier marca bajo pedido. Contáctanos y te enviamos una cotización personalizada.", en: "We import and distribute parts, pieces, spare parts, accessories and automotive tools of any brand on request. Contact us and we'll send you a personalized quote." },
+  'parts-cta': { es: "Solicitar cotización", en: "Request a quote" },
+  'banner-eyebrow': { es: "Cotización sin compromiso", en: "No-obligation quote" },
+  'banner-h3': { es: "Inicia tu proceso de importación hoy mismo", en: "Start your import process today" },
+  'banner-p': { es: "Cotiza tu vehículo, maquinaria o repuestos en minutos. Te asesoramos en todo el proceso.", en: "Get a quote for your vehicle, machinery or parts in minutes. We'll guide you through the entire process." },
+  'banner-cta': { es: "Solicitar importación", en: "Request import" },
   'contact-eyebrow': { es: "Contacto", en: "Contact" },
-  'contact-h2':      { es: "Hablémoslo", en: "Let's talk" },
-  'field-nombre':    { es: "Nombre", en: "Name" },
-  'field-correo':    { es: "Correo", en: "Email" },
-  'field-telefono':  { es: "Teléfono", en: "Phone" },
-  'field-mensaje':   { es: "Mensaje", en: "Message" },
-  'ph-nombre':       { es: "Tu nombre", en: "Your name" },
-  'ph-mensaje':      { es: "Cuéntanos qué vehículo o repuesto buscas", en: "Tell us what vehicle or part you're looking for" },
-  'btn-enviar':      { es: "Enviar", en: "Send" },
-  'form-sent':       { es: "Enviado ✓", en: "Sent ✓" },
-  'map-label':       { es: "MAPA / UBICACIÓN", en: "MAP / LOCATION" },
-
-  // Navegación
-  'nav-inicio':    { es: "Inicio", en: "Home" },
-  'nav-nosotros':  { es: "Nosotros", en: "About" },
-  'nav-catalogo':  { es: "Catálogo", en: "Catalog" },
+  'contact-h2': { es: "Hablemos de tu proyecto", en: "Let's talk about your project" },
+  'nav-inicio': { es: "Inicio", en: "Home" },
+  'nav-nosotros': { es: "Nosotros", en: "About" },
   'nav-servicios': { es: "Servicios", en: "Services" },
-  'nav-contacto':  { es: "Contacto", en: "Contact" },
-  'nav-cta':       { es: "Reservar test drive", en: "Book a test drive" },
-
-  // Footer
-  'footer-desc':      { es: "Vehículos y repuestos importados, con garantía y soporte completo.", en: "Imported vehicles and parts, with full warranty and support." },
+  'nav-catalogo': { es: "Catálogo", en: "Catalog" },
+  'nav-contacto': { es: "Contacto", en: "Contact" },
+  'nav-cta': { es: "Solicitar importación", en: "Request import" },
+  'field-nombre': { es: "Nombre", en: "Name" },
+  'field-correo': { es: "Correo", en: "Email" },
+  'field-telefono': { es: "Teléfono", en: "Phone" },
+  'field-mensaje': { es: "Mensaje", en: "Message" },
+  'ph-nombre': { es: "Tu nombre", en: "Your name" },
+  'ph-mensaje': { es: "Cuéntanos qué vehículo, maquinaria o repuesto necesitas importar", en: "Tell us what vehicle, machinery or part you need to import" },
+  'btn-enviar': { es: "Enviar", en: "Send" },
+  'form-sent': { es: "Enviado ✓", en: "Sent ✓" },
+  'map-label': { es: "MAPA / UBICACIÓN", en: "MAP / LOCATION" },
+  'footer-desc': { es: "Importación, distribución y comercialización de vehículos, maquinaria y autopartes.", en: "Import, distribution and marketing of vehicles, machinery and auto parts." },
   'footer-col-links': { es: "Enlaces", en: "Links" },
   'footer-col-support': { es: "Soporte", en: "Support" },
-  'footer-col-follow':  { es: "Síguenos", en: "Follow us" },
-  'footer-blog':      { es: "Blog", en: "Blog" },
-  'footer-precios':   { es: "Precios", en: "Pricing" },
-  'footer-preguntas': { es: "Preguntas", en: "FAQ" },
-  'footer-terms':     { es: "Términos", en: "Terms" },
-  'footer-privacy':   { es: "Privacidad", en: "Privacy" }
+  'footer-col-follow': { es: "Síguenos", en: "Follow us" },
+  'footer-catalogo': { es: "Catálogo", en: "Catalog" },
+  'footer-cotizar': { es: "Cotizar", en: "Get a quote" },
+  'footer-preguntas': { es: "Preguntas frecuentes", en: "FAQ" },
+  'footer-terms': { es: "Términos", en: "Terms" },
+  'footer-privacy': { es: "Privacidad", en: "Privacy" }
 };
 
 let currentLang = 'es';
+let currentDark = false;
 
-/** Aplica las traducciones al DOM */
+try {
+  const savedLang = localStorage.getItem('ajLang');
+  if (savedLang) currentLang = savedLang;
+  const savedDark = localStorage.getItem('ajDark');
+  if (savedDark) currentDark = savedDark === '1';
+} catch (e) {}
+
 function applyLanguage(lang) {
   document.documentElement.lang = lang;
-
-  // Textos con data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[key]) el.textContent = translations[key][lang];
   });
-
-  // Placeholders con data-i18n-placeholder
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (translations[key]) el.setAttribute('placeholder', translations[key][lang]);
   });
-
-  // Botón de idioma
-  document.getElementById('langToggle').textContent = lang === 'es' ? 'EN' : 'ES';
+  const langBtn = document.getElementById('langToggle');
+  if (langBtn) langBtn.textContent = lang === 'es' ? 'EN' : 'ES';
 }
 
-/** Cambia el idioma completo */
 function setLang(lang) {
   currentLang = lang;
-  renderContent(lang);
   applyLanguage(lang);
-  try { applyEdits(loadEdits()); } catch (e) {}
   try { localStorage.setItem('ajLang', lang); } catch (e) {}
 }
 
-
-/* ============================================================
-   9. MODO OSCURO (Dark / Light)
-   Toggle de clase .dark en <body>
-   ============================================================ */
-let currentDark = false;
-
-/** Activa/desactiva el modo oscuro */
 function setDark(on) {
   document.body.classList.toggle('dark', on);
-  document.getElementById('darkToggle').textContent = on ? '☀️' : '🌙';
+  const darkBtn = document.getElementById('darkToggle');
+  if (darkBtn) darkBtn.textContent = on ? '☀️' : '🌙';
   currentDark = on;
   try { localStorage.setItem('ajDark', on ? '1' : '0'); } catch (e) {}
 }
 
-
-/* ============================================================
-   10. INICIALIZACIÓN
-   Carga preferencias guardadas y renderiza todo
-   ============================================================ */
-(function init() {
-  // Cargar preferencias de localStorage
-  try {
-    const savedLang = localStorage.getItem('ajLang');
-    if (savedLang) currentLang = savedLang;
-
-    const savedDark = localStorage.getItem('ajDark');
-    if (savedDark) currentDark = savedDark === '1';
-  } catch (e) {
-    // localStorage no disponible
+// 9. INICIALIZACIÓN
+document.addEventListener('DOMContentLoaded', () => {
+  // Splash screen
+  const splash = document.getElementById('splash');
+  if (splash) {
+    setTimeout(() => {
+      splash.classList.add('fade-out');
+      document.body.classList.remove('loading');
+      setTimeout(() => splash.remove(), 900);
+    }, 1200);
   }
 
-  // Event listeners de toggles
-  document.getElementById('langToggle').addEventListener('click', () =>
-    setLang(currentLang === 'es' ? 'en' : 'es')
-  );
-  document.getElementById('darkToggle').addEventListener('click', () =>
-    setDark(!currentDark)
-  );
+  // Inicializar carrusel
+  initCarousel();
+
+  // Event listeners
+  const langToggle = document.getElementById('langToggle');
+  const darkToggle = document.getElementById('darkToggle');
+  
+  if (langToggle) langToggle.addEventListener('click', () => setLang(currentLang === 'es' ? 'en' : 'es'));
+  if (darkToggle) darkToggle.addEventListener('click', () => setDark(!currentDark));
 
   // Aplicar estado inicial
   setLang(currentLang);
   setDark(currentDark);
-})();
+
+  // Responsive carousel
+  window.addEventListener('resize', () => {
+    updateCarousel();
+  });
+});
