@@ -1,246 +1,348 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A&J Imports Motors — Vehículos y repuestos importados</title>
-<link rel="stylesheet" href="css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A&J Imports Motors — Importación de vehículos y autopartes</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- TAILWIND CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'selector',
+      theme: {
+        extend: {
+          colors: {
+            ink: 'var(--ink)', 'ink-soft': 'var(--ink-soft)', muted: 'var(--muted)',
+            line: 'var(--line)', paper: 'var(--paper)', 'paper-soft': 'var(--paper-soft)',
+            accent: 'var(--accent)', 'on-accent': 'var(--on-accent)', card: 'var(--card-bg)',
+          },
+          maxWidth: { container: '1200px' }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
 
-<header>
-  <div class="wrap nav">
-    <div class="logo">A&amp;J IMPORTS</div>
-    <nav class="nav-links">
-      <a href="#inicio" data-i18n="nav-inicio">Inicio</a>
-      <a href="#nosotros" data-i18n="nav-nosotros">Nosotros</a>
-      <a href="#catalogo" data-i18n="nav-catalogo">Catálogo</a>
-      <a href="#servicios" data-i18n="nav-servicios">Servicios</a>
-      <a href="#contacto" data-i18n="nav-contacto">Contacto</a>
+<body class="bg-paper text-ink loading">
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash" class="splash">
+    <img src="/img/logo.jpg" alt="A&J Imports Motors" class="splash-logo">
+  </div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-[#111] text-white">
+    <nav class="max-w-container mx-auto px-5 max-md:px-5 flex items-center justify-between py-2.5">
+      <a href="#inicio" class="flex items-center">
+        <img src="./img/logo_blanco.png" alt="A&J Imports Motors" class="nav-logo">
+      </a>
+
+      <ul class="nav-links hidden md:flex gap-9 text-[13px] text-[#d9d9d9]">
+        <li><a href="#inicio" data-i18n="nav-inicio" class="relative pb-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-px after:bg-white after:transition-all hover:after:w-full">Inicio</a></li>
+        <li><a href="#nosotros" data-i18n="nav-nosotros" class="relative pb-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-px after:bg-white after:transition-all hover:after:w-full">Nosotros</a></li>
+        <li><a href="#servicios" data-i18n="nav-servicios" class="relative pb-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-px after:bg-white after:transition-all hover:after:w-full">Servicios</a></li>
+        <li><a href="#catalogo" data-i18n="nav-catalogo" class="relative pb-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-px after:bg-white after:transition-all hover:after:w-full">Catálogo</a></li>
+        <li><a href="#contacto" data-i18n="nav-contacto" class="relative pb-1 hover:text-white transition-colors after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-px after:bg-white after:transition-all hover:after:w-full">Contacto</a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <button id="langToggle" class="bg-transparent border-[1.5px] border-white/40 text-white rounded-full px-3.5 py-2 text-[11px] font-extrabold tracking-wide cursor-pointer hover:bg-white hover:text-[#111] hover:border-white transition-all">EN</button>
+        <button id="darkToggle" class="bg-transparent border-[1.5px] border-white/40 text-white rounded-full w-[34px] h-[34px] text-[15px] cursor-pointer flex items-center justify-center hover:bg-white hover:border-white transition-all hover:rotate-20"></button>
+        <a href="#contacto" data-i18n="nav-cta" class="hidden md:inline-flex bg-transparent text-white border-[1.5px] border-white/60 rounded-full px-7 py-3.5 text-[13px] font-bold hover:bg-white hover:text-[#111] transition-all whitespace-nowrap">Solicitar importación</a>
+        <button class="nav-toggle md:hidden bg-transparent border-none text-white text-[22px] cursor-pointer"></button>
+      </div>
     </nav>
-    <div class="nav-controls">
-      <button id="langToggle" class="pill-toggle" title="Switch language">EN</button>
-      <button id="darkToggle" class="icon-toggle" title="Modo oscuro">🌙</button>
-      <a href="#contacto" class="btn btn-outline" data-i18n="nav-cta">Reservar test drive</a>
-    </div>
-    <button class="nav-toggle" aria-label="Abrir menú">☰</button>
-  </div>
-</header>
+  </header>
 
-<section class="hero" id="inicio" data-edit-img="hero-bg">
-  <span class="hero-vertical">Importado · Certificado</span>
-  <div class="wrap">
-    <div class="hero-inner">
-      <div class="eyebrow hero-eyebrow reveal" data-edit-text="hero-eyebrow">Vehículos importados de confianza</div>
-      <h1 class="reveal reveal-delay-1" data-edit-text="hero-h1">Importa tu próximo vehículo, sin complicaciones</h1>
-      <p class="reveal reveal-delay-2" data-edit-text="hero-p">Catálogo actualizado, garantía incluida y asesoría completa en cada etapa del proceso de importación.</p>
-      <a href="#catalogo" class="btn btn-dark reveal reveal-delay-3" data-i18n="hero-cta">Explorar catálogo</a>
+  <!-- HERO SECTION -->
+  <section id="inicio" class="hero-gradient relative min-h-[88vh] flex items-center text-white overflow-hidden">
+    <span class="absolute left-7 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] text-[11px] tracking-[.3em] font-bold text-white/55 uppercase max-md:hidden">Importamos · Distribuímos · Exportamos</span>
+    <div class="max-w-container mx-auto px-12 max-md:px-5 pl-[60px] max-md:pl-5 max-w-[700px]">
+      <p class="eyebrow-line eyebrow-line--white flex items-center gap-2.5 text-[11px] font-bold tracking-[.14em] text-white/75 uppercase mb-3.5" data-i18n="hero-eyebrow">Importación y comercialización integral</p>
+      <h1 class="text-[clamp(34px,5vw,54px)] font-bold leading-[1.08] tracking-tight my-5" data-i18n="hero-h1">Tu aliado en importación de vehículos y autopartes</h1>
+      <p class="text-[15px] text-white/85 max-w-[560px] mb-8 leading-relaxed" data-i18n="hero-p">Compra, venta, distribution y comercialización de vehículos nacionales e importados, maquinaria pesada, autopartes y servicios técnicos especializados. Importamos bajo pedido con garantía y asesoría completa.</p>
+      <div class="flex gap-4 flex-wrap">
+        <a href="#catalogo" data-i18n="hero-cta" class="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-[13px] font-bold bg-white text-[#111] hover:-translate-y-0.5 transition-transform whitespace-nowrap">Ver referencias</a>
+        <a href="#contacto" data-i18n="hero-cta-2" class="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-[13px] font-bold border-[1.5px] border-white text-white hover:bg-white hover:text-[#111] transition-all whitespace-nowrap">Cotizar ahora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="bg-[#111] text-white overflow-hidden py-3.5 border-t border-[#2a2a2a]">
+    <div class="ticker-track">
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Vehículos importados</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Maquinaria pesada</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Autopartes originales</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Servicios técnicos</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Importación bajo pedido</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Vehículos importados</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Maquinaria pesada</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Autopartes originales</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Servicios técnicos</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Importación bajo pedido</span>
     </div>
   </div>
-</section>
 
-<div class="ticker">
-  <div class="ticker-track" id="tickerTrack">
-    <span>Vehículos importados</span>
-    <span>Repuestos originales</span>
-    <span>Garantía incluida</span>
-    <span>Envío a todo el país</span>
-    <span>Asesoría aduanal</span>
-    <span>Vehículos importados</span>
-    <span>Repuestos originales</span>
-    <span>Garantía incluida</span>
-    <span>Envío a todo el país</span>
-    <span>Asesoría aduanal</span>
-  </div>
-</div>
-
-<section id="nosotros">
-  <div class="wrap about">
-    <div class="about-imgs reveal">
-      <div class="img-main" data-edit-img="about-img-main"></div>
-      <div class="img-float" data-edit-img="about-img-float"></div>
-    </div>
-    <div>
-      <div class="eyebrow reveal" data-edit-text="about-eyebrow">Quiénes somos</div>
-      <h2 class="reveal reveal-delay-1" data-edit-text="about-h2">Sobre A&amp;J Imports</h2>
-      <p class="reveal reveal-delay-2" data-edit-text="about-p">Más de una década conectando clientes con vehículos y repuestos importados, con procesos claros y seguimiento en cada etapa del proceso.</p>
-      <div class="reveal reveal-delay-3">
-        <div class="feature-line">
-          <span class="feature-check"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span data-edit-text="about-feat-1">Selección de vehículos de lujo</span>
+  <!-- NOSOTROS -->
+  <section id="nosotros" class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5 grid grid-cols-2 gap-[70px] items-center max-[900px]:grid-cols-1">
+      <div class="relative">
+        <div class="img-placeholder rounded-xl aspect-[4/5] bg-gradient-to-br from-[#d4d4d4] to-[#b8b8b8]"></div>
+        <div class="img-placeholder absolute -bottom-10 -right-10 w-[56%] aspect-square rounded-xl shadow-2xl bg-gradient-to-br from-[#9a9a9a] to-[#7a7a7a] border-[6px] border-white max-[520px]:-right-4 max-[520px]:-bottom-6 max-[520px]:w-1/2"></div>
+      </div>
+      <div>
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px] font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal" data-i18n="about-eyebrow">Quiénes somos</p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08] tracking-tight mb-4 reveal" data-i18n="about-h2">A&J Imports Motors C.A.</h2>
+        <p class="text-ink-soft text-sm leading-relaxed mb-6 reveal" data-i18n="about-p">Empresa dedicada a la importación, exportación, distribución y comercialización de vehículos automotores, maquinaria pesada, autopartes y servicios técnicos especializados. Conectamos a nuestros clientes con las mejores marcas nacionales e internacionales.</p>
+        <div class="flex items-center gap-3.5 mb-4 text-sm reveal">
+          <span class="w-7 h-7 rounded-full bg-ink flex items-center justify-center flex-none"><svg class="w-3 h-3" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span data-i18n="about-feat-1">Importación bajo pedido</span>
         </div>
-        <div class="feature-line">
-          <span class="feature-check"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span data-edit-text="about-feat-2">Entrega rápida y seguimiento</span>
+        <div class="flex items-center gap-3.5 mb-4 text-sm reveal">
+          <span class="w-7 h-7 rounded-full bg-ink flex items-center justify-center flex-none"><svg class="w-3 h-3" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span data-i18n="about-feat-2">Garantía y post-venta</span>
         </div>
-        <a href="#contacto" class="btn btn-ghost" data-i18n="about-cta">Conocer más</a>
+        <div class="flex items-center gap-3.5 mb-4 text-sm reveal">
+          <span class="w-7 h-7 rounded-full bg-ink flex items-center justify-center flex-none"><svg class="w-3 h-3" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span data-i18n="about-feat-3">Asesoría integral</span>
+        </div>
+        <a href="#contacto" data-i18n="about-cta" class="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-[13px] font-bold border-[1.5px] border-ink text-ink bg-transparent hover:bg-accent hover:text-on-accent hover:border-accent transition-all mt-3 reveal">Contáctanos</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="catalogo">
-  <div class="wrap">
-    <div class="catalog-head reveal">
+  <!-- SERVICIOS DETALLADOS (Objeto Social) -->
+  <section id="servicios" class="py-24 max-md:py-16 bg-paper-soft">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+      <div class="mb-14">
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px] font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal" data-i18n="serv-eyebrow">Nuestro objeto social</p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08] tracking-tight reveal" data-i18n="serv-h2">Servicios integrales del sector automotriz</h2>
+      </div>
+
+      <div class="grid grid-cols-2 gap-8 max-[800px]:grid-cols-1">
+        <!-- Vehículos -->
+        <div class="service-card bg-card border border-line rounded-xl p-8 reveal">
+          <div class="text-5xl text-accent mb-5"><i class="fa-solid fa-car"></i></div>
+          <h3 class="text-xl font-bold mb-3" data-i18n="serv-veh-title">Vehículos Automotores</h3>
+          <p class="text-[13px] text-ink-soft leading-relaxed mb-4" data-i18n="serv-veh-desc">Compra, venta, distribución, comercialización, importación y exportación de todo tipo de vehículos: nacionales o importados, de carga, particulares, colectivos, motocicletas y vehículos eléctricos.</p>
+          <ul class="text-[12px] text-muted space-y-2">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Vehículos de carga y particulares</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Motocicletas</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Vehículos eléctricos</li>
+          </ul>
+        </div>
+
+        <!-- Maquinaria -->
+        <div class="service-card bg-card border border-line rounded-xl p-8 reveal reveal-delay-1">
+          <div class="text-5xl text-accent mb-5"><i class="fa-solid fa-truck-monster"></i></div>
+          <h3 class="text-xl font-bold mb-3" data-i18n="serv-maq-title">Maquinaria Pesada</h3>
+          <p class="text-[13px] text-ink-soft leading-relaxed mb-4" data-i18n="serv-maq-desc">Importación y comercialización de maquinaria pesada, agrícola e industrial para todo tipo de proyectos y sectores productivos.</p>
+          <ul class="text-[12px] text-muted space-y-2">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Maquinaria agrícola</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Maquinaria industrial</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Equipos pesados</li>
+          </ul>
+        </div>
+
+        <!-- Transporte -->
+        <div class="service-card bg-card border border-line rounded-xl p-8 reveal">
+          <div class="text-5xl text-accent mb-5"><i class="fa-solid fa-truck-moving"></i></div>
+          <h3 class="text-xl font-bold mb-3" data-i18n="serv-trans-title">Servicios de Transporte</h3>
+          <p class="text-[13px] text-ink-soft leading-relaxed mb-4" data-i18n="serv-trans-desc">Prestamos servicio de transporte de vehículos pesados, transporte de personal y servicio de transporte ejecutivo con los más altos estándares de calidad.</p>
+          <ul class="text-[12px] text-muted space-y-2">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Transporte de vehículos</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Transporte de personal</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Transporte ejecutivo</li>
+          </ul>
+        </div>
+
+        <!-- Autopartes -->
+        <div class="service-card bg-card border border-line rounded-xl p-8 reveal reveal-delay-1">
+          <div class="text-5xl text-accent mb-5"><i class="fa-solid fa-gears"></i></div>
+          <h3 class="text-xl font-bold mb-3" data-i18n="serv-part-title">Suministros y Autopartes</h3>
+          <p class="text-[13px] text-ink-soft leading-relaxed mb-4" data-i18n="serv-part-desc">Importación, exportación, distribución y venta al mayor y detal de partes, piezas, repuestos, accesorios y herramientas automotrices y de motos de cualquier marca.</p>
+          <ul class="text-[12px] text-muted space-y-2">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Repuestos originales</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Accesorios automotrices</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Herramientas especializadas</li>
+          </ul>
+        </div>
+
+        <!-- Servicios Técnicos -->
+        <div class="service-card bg-card border border-line rounded-xl p-8 reveal">
+          <div class="text-5xl text-accent mb-5"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+          <h3 class="text-xl font-bold mb-3" data-i18n="serv-tec-title">Servicios Técnicos</h3>
+          <p class="text-[13px] text-ink-soft leading-relaxed mb-4" data-i18n="serv-tec-desc">Prestación de servicios de mantenimiento preventivo y correctivo, mecánica general, latonería, pintura, escaneo electrónico, blindaje y servicios de post-venta.</p>
+          <ul class="text-[12px] text-muted space-y-2">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Mantenimiento preventivo/correctivo</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Mecánica general</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Latonería y pintura</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Escaneo electrónico</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Blindaje</li>
+          </ul>
+        </div>
+
+        <!-- Representación -->
+        <div class="service-card bg-card border border-line rounded-xl p-8 reveal reveal-delay-1">
+          <div class="text-5xl text-accent mb-5"><i class="fa-solid fa-handshake"></i></div>
+          <h3 class="text-xl font-bold mb-3" data-i18n="serv-rep-title">Representación y Alianzas</h3>
+          <p class="text-[13px] text-ink-soft leading-relaxed mb-4" data-i18n="serv-rep-desc">Representación de marcas nacionales o extranjeras, gestión de concesionarios y establecimiento de alianzas comerciales estratégicas.</p>
+          <ul class="text-[12px] text-muted space-y-2">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Representación de marcas</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Gestión de concesionarios</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i>Alianzas comerciales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO CARRUSEL -->
+  <section id="catalogo" class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+      <div class="mb-11">
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px] font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal" data-i18n="cat-eyebrow">Importación bajo pedido</p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08] tracking-tight reveal" data-i18n="cat-h2">Vehículos de referencia</h2>
+        <p class="text-ink-soft text-[13.5px] max-w-[600px] mt-3 reveal" data-i18n="cat-desc">Estos son ejemplos de vehículos que podemos importar para ti. Contáctanos y cotizamos el que necesites.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex gap-2.5 mb-9">
+        <button class="tab active px-5 py-2 rounded-full text-xs font-bold border-[1.5px] border-line text-muted cursor-pointer transition-all" data-tab="vehicles" data-i18n="tab-vehiculos">Vehículos</button>
+        <button class="tab px-5 py-2 rounded-full text-xs font-bold border-[1.5px] border-line text-muted cursor-pointer transition-all" data-tab="parts" data-i18n="tab-repuestos">Repuestos</button>
+      </div>
+
+      <!-- Carrusel de Vehículos (Con ancho máximo centrado y contenedor individual estricto) -->
+      <div id="vehiclesCarousel" class="relative reveal max-w-[850px] mx-auto">
+        <div class="carousel-container overflow-hidden relative">
+          <div id="carouselTrack" class="carousel-track flex transition-transform duration-500 ease-out">
+            <!-- Se llena dinámicamente con JS mostrando un ítem exacto por slide -->
+          </div>
+        </div>
+        
+        <!-- Controles del carrusel -->
+        <button id="carouselPrev" class="carousel-nav-btn absolute left-[-20px] md:left-[-35px] top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-line flex items-center justify-center cursor-pointer z-10 shadow-md hover:bg-ink hover:text-white transition-all">
+          <i class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+        <button id="carouselNext" class="carousel-nav-btn absolute right-[-20px] md:right-[-35px] top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-card border border-line flex items-center justify-center cursor-pointer z-10 shadow-md hover:bg-ink hover:text-white transition-all">
+          <i class="fa-solid fa-chevron-right text-sm"></i>
+        </button>
+        
+        <!-- Indicadores -->
+        <div id="carouselIndicators" class="flex justify-center gap-1.5 mt-5"></div>
+      </div>
+
+      <!-- Repuestos (Solo botón de cotización) -->
+      <div id="partsSection" class="hidden mt-14 reveal">
+        <div class="bg-paper-soft border border-line rounded-2xl p-12 text-center max-w-[700px] mx-auto">
+          <i class="fa-solid fa-gears text-6xl text-accent mb-6"></i>
+          <h3 class="text-[28px] font-bold mb-4" data-i18n="parts-title">¿Necesitas repuestos o autopartes?</h3>
+          <p class="text-[14px] text-ink-soft mb-8 leading-relaxed" data-i18n="parts-desc">Importamos y distribuimos partes, piezas, repuestos, accesorios y herramientas automotrices de cualquier marca bajo pedido. Contáctanos y te enviamos una cotización personalizada.</p>
+          <a href="#contacto" data-i18n="parts-cta" class="inline-flex items-center justify-center px-8 py-4 rounded-full text-[14px] font-bold bg-accent text-on-accent hover:opacity-85 transition-opacity">Solicitar cotización</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER CTA -->
+  <section class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+      <div class="banner-gradient rounded-xl overflow-hidden text-white px-14 py-16 max-md:px-6 max-md:py-10 reveal">
+        <p class="eyebrow-line eyebrow-line--white flex items-center gap-2.5 text-[11px] font-bold tracking-[.14em] text-white/75 uppercase mb-3.5" data-i18n="banner-eyebrow">Cotización sin compromiso</p>
+        <h3 class="text-[clamp(22px,3vw,30px)] font-bold leading-[1.08] max-w-[520px] mb-3" data-i18n="banner-h3">Inicia tu proceso de importación hoy mismo</h3>
+        <p class="text-[13.5px] text-white/85 max-w-[420px] mb-6" data-i18n="banner-p">Cotiza tu vehículo, maquinaria o repuestos en minutos. Te asesoramos en todo el proceso.</p>
+        <a href="#contacto" data-i18n="banner-cta" class="inline-flex items-center justify-center px-7 py-3.5 rounded-full text-[13px] font-bold bg-white text-[#111] hover:-translate-y-0.5 transition-transform whitespace-nowrap">Solicitar importación</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5 grid grid-cols-[1.15fr_1fr] gap-16 max-[900px]:grid-cols-1">
       <div>
-        <div class="eyebrow" data-edit-text="cat-eyebrow">Recomendados para ti</div>
-        <h2 data-edit-text="cat-h2">Nuestra colección de vehículos premium</h2>
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px] font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal" data-i18n="contact-eyebrow">Contacto</p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08] tracking-tight mb-8 reveal" data-i18n="contact-h2">Hablemos de tu proyecto</h2>
+        <form id="contactForm" class="reveal">
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold" data-i18n="field-nombre">Nombre</label>
+            <input type="text" data-i18n-placeholder="ph-nombre" placeholder="Tu nombre" class="w-full border-[1.5px] border-line rounded-md px-3.5 py-3 text-[13px] text-ink bg-paper-soft focus:outline-none focus:border-ink transition-colors">
+          </div>
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold" data-i18n="field-correo">Correo</label>
+            <input type="email" placeholder="email@ejemplo.com" class="w-full border-[1.5px] border-line rounded-md px-3.5 py-3 text-[13px] text-ink bg-paper-soft focus:outline-none focus:border-ink transition-colors">
+          </div>
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold" data-i18n="field-telefono">Teléfono</label>
+            <input type="tel" placeholder="+58 412 000 0000" class="w-full border-[1.5px] border-line rounded-md px-3.5 py-3 text-[13px] text-ink bg-paper-soft focus:outline-none focus:border-ink transition-colors">
+          </div>
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold" data-i18n="field-mensaje">Mensaje</label>
+            <textarea data-i18n-placeholder="ph-mensaje" placeholder="Cuéntanos qué vehículo, maquinaria o repuesto necesitas importar" rows="4" class="w-full border-[1.5px] border-line rounded-md px-3.5 py-3 text-[13px] text-ink bg-paper-soft focus:outline-none focus:border-ink transition-colors resize-y min-h-[100px]"></textarea>
+          </div>
+          <button type="submit" data-i18n="btn-enviar" class="w-full inline-flex items-center justify-center px-7 py-3.5 rounded-full text-[13px] font-bold bg-accent text-on-accent hover:opacity-85 transition-opacity">Enviar</button>
+        </form>
+      </div>
+      <div class="reveal">
+        <div class="img-placeholder aspect-video rounded-xl mb-5 bg-gradient-to-br from-[#d4d4d4] to-[#b8b8b8] flex items-center justify-center text-[11px] font-bold text-[#666] tracking-wider" data-i18n="map-label">MAPA / UBICACIÓN</div>
+        <a href="#" class="block w-full mb-5 text-center px-7 py-3.5 rounded-full text-[13px] font-bold bg-[#25D366] text-white hover:opacity-90 transition-opacity">WhatsApp Business</a>
+        <div class="flex gap-3">
+          <a href="#" class="w-[38px] h-[38px] rounded-full border-[1.5px] border-line flex items-center justify-center hover:bg-accent hover:border-accent transition-all group">
+            <svg class="w-4 h-4 stroke-[#555] group-hover:stroke-on-accent transition-colors" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" class="w-[38px] h-[38px] rounded-full border-[1.5px] border-line flex items-center justify-center hover:bg-accent hover:border-accent transition-all group">
+            <svg class="w-4 h-4 stroke-[#555] group-hover:stroke-on-accent transition-colors" fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+          </a>
+          <a href="#" class="w-[38px] h-[38px] rounded-full border-[1.5px] border-line flex items-center justify-center hover:bg-accent hover:border-accent transition-all group">
+            <svg class="w-4 h-4 stroke-[#555] group-hover:stroke-on-accent transition-colors" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          </a>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="catalog-block reveal">
-      <div class="tabs">
-        <div class="tab active" data-i18n="tab-vehiculos">Vehículos</div>
-        <div class="tab" data-i18n="tab-repuestos">Repuestos</div>
+  <!-- FOOTER -->
+  <footer class="bg-[#111] text-white pt-[70px] pb-[30px]">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+      <div class="grid grid-cols-[1.3fr_1fr_1fr_1fr] gap-10 mb-[50px] max-[800px]:grid-cols-2">
+        <div>
+          <div class="text-[17px] font-extrabold tracking-wide mb-3.5">A&J IMPORTS</div>
+          <p class="text-[12.5px] text-[#999] leading-relaxed max-w-[280px]" data-i18n="footer-desc">Importación, distribución y comercialización de vehículos, maquinaria y autopartes.</p>
+        </div>
+        <div>
+          <h5 class="text-xs font-bold mb-4 tracking-wide" data-i18n="footer-col-links">Enlaces</h5>
+          <a href="#inicio" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-inicio">Inicio</a>
+          <a href="#nosotros" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-nosotros">Nosotros</a>
+          <a href="#servicios" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-servicios">Servicios</a>
+          <a href="#contacto" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-contacto">Contacto</a>
+        </div>
+        <div>
+          <h5 class="text-xs font-bold mb-4 tracking-wide" data-i18n="footer-col-support">Soporte</h5>
+          <a href="#catalogo" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="footer-catalogo">Catálogo</a>
+          <a href="#contacto" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="footer-cotizar">Cotizar</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="footer-preguntas">Preguntas frecuentes</a>
+        </div>
+        <div>
+          <h5 class="text-xs font-bold mb-4 tracking-wide" data-i18n="footer-col-follow">Síguenos</h5>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors">Facebook</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors">Instagram</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors">WhatsApp</a>
+        </div>
       </div>
-      <div class="chips">
-        <div class="chip" data-i18n="chip-tipo">Tipo</div>
-        <div class="chip" data-i18n="chip-precio">Precio</div>
-        <div class="chip" data-i18n="chip-marca">Marca</div>
-        <div class="chip" data-i18n="chip-nuevousado">Nuevo / usado</div>
+      <div class="flex justify-between flex-wrap gap-3 border-t border-[#2a2a2a] pt-6 text-[11.5px] text-[#777]">
+        <span>© 2026 A&J Imports Motors C.A.</span>
+        <div class="flex gap-3">
+          <a href="#" class="hover:text-white transition-colors" data-i18n="footer-terms">Términos</a>
+          <span>|</span>
+          <a href="#" class="hover:text-white transition-colors" data-i18n="footer-privacy">Privacidad</a>
+        </div>
       </div>
-      <div class="grid" id="vehiclesGrid"></div>
     </div>
+  </footer>
 
-    <div class="catalog-block reveal">
-      <div class="tabs">
-        <div class="tab" data-i18n="tab-vehiculos">Vehículos</div>
-        <div class="tab active" data-i18n="tab-repuestos">Repuestos</div>
-      </div>
-      <div class="chips">
-        <div class="chip" data-i18n="chip-categoria">Categoría</div>
-        <div class="chip" data-i18n="chip-marcaveh">Marca del vehículo</div>
-        <div class="chip" data-i18n="chip-precio">Precio</div>
-      </div>
-      <div class="grid" id="partsGrid"></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="banner reveal" data-edit-img="banner-bg">
-      <div class="eyebrow hero-eyebrow" style="margin-bottom:16px;" data-edit-text="banner-eyebrow">Cotización fácil</div>
-      <h3 data-edit-text="banner-h3">Inicia tu proceso de importación aquí</h3>
-      <p data-edit-text="banner-p">Cotiza tu vehículo o repuesto en minutos, sin compromiso.</p>
-      <a href="#contacto" class="btn btn-light" data-i18n="banner-cta">Solicitar importación</a>
-    </div>
-  </div>
-</section>
-
-<section id="servicios">
-  <div class="wrap">
-    <div class="services-head reveal">
-      <div class="eyebrow" data-i18n="serv-eyebrow">Recomendados</div>
-      <h2 data-i18n="serv-h2">Nuestros servicios de importación</h2>
-    </div>
-    <div class="services-grid">
-      <div class="service-item reveal">
-        <span class="num">01</span>
-        <div class="rule"></div>
-        <h4 data-edit-text="serv-1-h4">Precios competitivos</h4>
-        <p data-edit-text="serv-1-p">Tarifas claras y transparentes en cada importación, sin costos ocultos.</p>
-      </div>
-      <div class="service-item reveal reveal-delay-1">
-        <span class="num">02</span>
-        <div class="rule"></div>
-        <h4 data-edit-text="serv-2-h4">Variedad de vehículos</h4>
-        <p data-edit-text="serv-2-p">Autos, carga, motos y maquinaria disponibles bajo pedido o en inventario.</p>
-      </div>
-      <div class="service-item reveal reveal-delay-2">
-        <span class="num">03</span>
-        <div class="rule"></div>
-        <h4 data-edit-text="serv-3-h4">Soporte 24/7</h4>
-        <p data-edit-text="serv-3-p">Acompañamiento durante todo el proceso de aduana y entrega.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="articles-head reveal">
-      <div>
-        <div class="eyebrow" data-edit-text="art-eyebrow">Últimos artículos</div>
-        <h2 data-edit-text="art-h2">Novedades del sector automotriz</h2>
-        <p data-edit-text="art-p">Guías y noticias sobre importación de vehículos y repuestos.</p>
-      </div>
-      <a href="#servicios" class="btn btn-ghost" data-i18n="btn-articles-cta">Nuestros servicios</a>
-    </div>
-    <div class="articles-grid" id="articlesGrid"></div>
-  </div>
-</section>
-
-<section id="contacto">
-  <div class="wrap contact">
-    <div class="reveal">
-      <div class="eyebrow" data-edit-text="contact-eyebrow">Contacto</div>
-      <h2 style="margin-bottom:30px;" data-edit-text="contact-h2">Hablémoslo</h2>
-      <form id="contactForm">
-        <div class="field"><label data-i18n="field-nombre">Nombre</label><input type="text" data-i18n-placeholder="ph-nombre" placeholder="Tu nombre"></div>
-        <div class="field"><label data-i18n="field-correo">Correo</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
-        <div class="field"><label data-i18n="field-telefono">Teléfono</label><input type="tel" placeholder="+58 000 0000000"></div>
-        <div class="field"><label data-i18n="field-mensaje">Mensaje</label><textarea data-i18n-placeholder="ph-mensaje" placeholder="Cuéntanos qué vehículo o repuesto buscas"></textarea></div>
-        <button type="submit" class="btn btn-dark" data-i18n="btn-enviar">Enviar</button>
-      </form>
-    </div>
-    <div class="reveal reveal-delay-1">
-      <div class="map-block" data-i18n="map-label">MAPA / UBICACIÓN</div>
-      <a href="#" class="btn btn-dark whatsapp-btn">WhatsApp Business</a>
-      <div class="socials">
-        <div class="social-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M18 3h-3a5 5 0 00-5 5v3H7v4h3v6h4v-6h3l1-4h-4V8a1 1 0 011-1h3z" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
-        <div class="social-circle"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="#555"/></svg></div>
-        <div class="social-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-9.3 7.9v-5.6H8.4V12h2.3V9.9c0-2.3 1.4-3.6 3.5-3.6.9 0 1.9.2 1.9.2v2.2h-1.1c-1.1 0-1.4.7-1.4 1.4V12h2.4l-.4 2.3h-2v5.6A8 8 0 0020 12z" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div>
-        <div class="logo">A&amp;J IMPORTS</div>
-        <p data-i18n="footer-desc">Vehículos y repuestos importados, con garantía y soporte completo.</p>
-      </div>
-      <div class="footer-col">
-        <h5 data-i18n="footer-col-links">Enlaces</h5>
-        <a href="#inicio" data-i18n="nav-inicio">Inicio</a>
-        <a href="#nosotros" data-i18n="nav-nosotros">Nosotros</a>
-        <a href="#servicios" data-i18n="nav-servicios">Servicios</a>
-        <a href="#" data-i18n="footer-blog">Blog</a>
-      </div>
-      <div class="footer-col">
-        <h5 data-i18n="footer-col-support">Soporte</h5>
-        <a href="#catalogo" data-i18n="footer-precios">Precios</a>
-        <a href="#contacto" data-i18n="nav-contacto">Contacto</a>
-        <a href="#" data-i18n="footer-preguntas">Preguntas</a>
-      </div>
-      <div class="footer-col">
-        <h5 data-i18n="footer-col-follow">Síguenos</h5>
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">WhatsApp</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 A&amp;J Imports Motors C.A.</span>
-      <span><a href="#" data-i18n="footer-terms">Términos</a> &nbsp;|&nbsp; <a href="#" data-i18n="footer-privacy">Privacidad</a></span>
-    </div>
-  </div>
-</footer>
-
-<button id="editToggleBtn" title="Editar sitio">✎</button>
-<div id="editToolbar" style="display:none;">
-  <div class="et-title">Modo edición</div>
-  <button id="etSave" style="background:#fff;color:#111;">💾 Guardar cambios</button>
-  <button id="etExport" style="background:#0078ff;color:#fff;">⬇ Descargar HTML</button>
-  <button id="etReset" style="background:transparent;color:#ff6b6b;border:1px solid #442222;">↺ Restablecer</button>
-  <div id="editStatus">Clic en un texto para editarlo. Clic en una imagen para reemplazarla.</div>
-</div>
-<input type="file" id="imgFileInput" accept="image/*" style="display:none;">
-
-<script src="js/index.js"></script>
-
+  <script src="js/index.js"></script>
 </body>
 </html>

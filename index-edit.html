@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A&J Imports Motors — Vehículos y repuestos importados</title>
+
+  <!-- ============================================
+       TAILWIND CSS (CDN)
+       Config: colores custom + dark mode por clase
+       ============================================ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'selector',   // Se activa con body.dark
+      theme: {
+        extend: {
+          colors: {
+            ink:         'var(--ink)',
+            'ink-soft':  'var(--ink-soft)',
+            muted:       'var(--muted)',
+            line:        'var(--line)',
+            paper:       'var(--paper)',
+            'paper-soft':'var(--paper-soft)',
+            accent:      'var(--accent)',
+            'on-accent': 'var(--on-accent)',
+            card:        'var(--card-bg)',
+          },
+          maxWidth: {
+            container: '1200px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- CSS Custom: solo animaciones, gradientes y edit mode -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-paper text-ink">
+
+  <!-- ============================================
+       SPLASH SCREEN (Preloader)
+       Se oculta automáticamente con JS al cargar
+       ============================================ -->
+  <div id="splash" class="splash">
+    <img src="/img/logo.jpg" alt="A&J Imports Motors" class="splash-logo">
+  </div>
+  <!-- ============================================
+       HEADER / NAVEGACIÓN
+       ============================================ -->
+  <header class="sticky top-0 z-50 bg-[#111] text-white">
+    <nav class="max-w-container mx-auto px-5 max-md:px-5 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="#inicio" class="text-[17px] font-extrabold tracking-wide">
+        <img src="./img/logo_blanco.png" alt="A&J Imports Motors" class="nav-logo">
+      </a>
+
+      <!-- Links de navegación (desktop) -->
+      <ul class="nav-links hidden md:flex gap-9 text-[13px] text-[#d9d9d9]">
+        <li>
+          <a href="#inicio" data-i18n="nav-inicio"
+             class="relative pb-1 hover:text-white transition-colors
+                    after:content-[''] after:absolute after:left-0 after:bottom-0
+                    after:w-0 after:h-px after:bg-white after:transition-all
+                    hover:after:w-full">
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a href="#nosotros" data-i18n="nav-nosotros"
+             class="relative pb-1 hover:text-white transition-colors
+                    after:content-[''] after:absolute after:left-0 after:bottom-0
+                    after:w-0 after:h-px after:bg-white after:transition-all
+                    hover:after:w-full">
+            Nosotros
+          </a>
+        </li>
+        <li>
+          <a href="#catalogo" data-i18n="nav-catalogo"
+             class="relative pb-1 hover:text-white transition-colors
+                    after:content-[''] after:absolute after:left-0 after:bottom-0
+                    after:w-0 after:h-px after:bg-white after:transition-all
+                    hover:after:w-full">
+            Catálogo
+          </a>
+        </li>
+        <li>
+          <a href="#servicios" data-i18n="nav-servicios"
+             class="relative pb-1 hover:text-white transition-colors
+                    after:content-[''] after:absolute after:left-0 after:bottom-0
+                    after:w-0 after:h-px after:bg-white after:transition-all
+                    hover:after:w-full">
+            Servicios
+          </a>
+        </li>
+        <li>
+          <a href="#contacto" data-i18n="nav-contacto"
+             class="relative pb-1 hover:text-white transition-colors
+                    after:content-[''] after:absolute after:left-0 after:bottom-0
+                    after:w-0 after:h-px after:bg-white after:transition-all
+                    hover:after:w-full">
+            Contacto
+          </a>
+        </li>
+      </ul>
+
+      <!-- Controles: Idioma + Dark Mode + CTA + Hamburguesa -->
+      <div class="flex items-center gap-3">
+        <button id="langToggle"
+                class="bg-transparent border-[1.5px] border-white/40 text-white
+                       rounded-full px-3.5 py-2 text-[11px] font-extrabold
+                       tracking-wide cursor-pointer hover:bg-white hover:text-[#111]
+                       hover:border-white transition-all">
+          EN
+        </button>
+        <button id="darkToggle"
+                class="bg-transparent border-[1.5px] border-white/40 text-white
+                       rounded-full w-[34px] h-[34px] text-[15px] cursor-pointer
+                       flex items-center justify-center hover:bg-white
+                       hover:border-white transition-all hover:rotate-20">
+          🌙
+        </button>
+        <a href="#contacto" data-i18n="nav-cta"
+           class="hidden md:inline-flex bg-transparent text-white
+                  border-[1.5px] border-white/60 rounded-full px-7 py-3.5
+                  text-[13px] font-bold hover:bg-white hover:text-[#111]
+                  transition-all whitespace-nowrap">
+          Reservar test drive
+        </a>
+        <button class="nav-toggle md:hidden bg-transparent border-none
+                       text-white text-[22px] cursor-pointer">
+          ☰
+        </button>
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- ============================================
+       HERO SECTION
+       Fondo oscuro permanente con gradiente complejo
+       ============================================ -->
+  <section id="inicio"
+           class="hero-gradient relative min-h-[88vh] flex items-center
+                  text-white overflow-hidden">
+
+    <!-- Texto vertical decorativo (izquierda) -->
+    <span class="absolute left-7 top-1/2 -translate-y-1/2
+                 [writing-mode:vertical-rl] text-[11px] tracking-[.3em]
+                 font-bold text-white/55 uppercase max-md:hidden">
+      Importado · Certificado
+    </span>
+
+    <!-- Contenido del Hero -->
+    <div class="max-w-container mx-auto px-12 max-md:px-5
+                pl-[60px] max-md:pl-5 max-w-[640px]">
+      <p class="eyebrow-line eyebrow-line--white flex items-center gap-2.5
+                text-[11px] font-bold tracking-[.14em] text-white/75
+                uppercase mb-3.5"
+         data-i18n="hero-eyebrow">
+        Vehículos importados de confianza
+      </p>
+      <h1 class="text-[clamp(34px,5vw,54px)] font-bold leading-[1.08]
+                 tracking-tight my-5"
+          data-i18n="hero-h1">
+        Importa tu próximo vehículo, sin complicaciones
+      </h1>
+      <p class="text-[15px] text-white/85 max-w-[460px] mb-8 leading-relaxed"
+         data-i18n="hero-p">
+        Catálogo actualizado, garantía incluida y asesoría completa en cada
+        etapa del proceso de importación.
+      </p>
+      <a href="#catalogo" data-i18n="hero-cta"
+         class="inline-flex items-center justify-center px-7 py-3.5
+                rounded-full text-[13px] font-bold bg-white text-[#111]
+                hover:-translate-y-0.5 transition-transform whitespace-nowrap">
+        Explorar catálogo
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       TICKER (Cinta animada de beneficios)
+       Siempre oscura, texto duplicado para loop
+       ============================================ -->
+  <div class="bg-[#111] text-white overflow-hidden py-3.5 border-t border-[#2a2a2a]">
+    <div class="ticker-track">
+      <!-- Primera copia -->
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Vehículos importados</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Repuestos originales</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Garantía incluida</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Envío a todo el país</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Asesoría aduanal</span>
+      <!-- Segunda copia (loop infinito) -->
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Vehículos importados</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Repuestos originales</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Garantía incluida</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Envío a todo el país</span>
+      <span class="flex items-center text-[11px] font-bold tracking-wider px-7 whitespace-nowrap after:content-[''] after:w-1.5 after:h-1.5 after:rounded-full after:bg-[#666] after:ml-7">Asesoría aduanal</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================
+       ABOUT / NOSOTROS
+       Grid 2 columnas: imágenes + texto
+       ============================================ -->
+  <section id="nosotros" class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5
+                grid grid-cols-2 gap-[70px] items-center
+                max-[900px]:grid-cols-1">
+
+      <!-- Columna izquierda: Imágenes -->
+      <div class="relative">
+        <div class="img-placeholder rounded-xl aspect-[4/5]
+                    bg-gradient-to-br from-[#d4d4d4] to-[#b8b8b8]"
+             data-edit-img="about-main"></div>
+        <div class="img-placeholder absolute -bottom-10 -right-10 w-[56%]
+                    aspect-square rounded-xl shadow-2xl
+                    bg-gradient-to-br from-[#9a9a9a] to-[#7a7a7a]
+                    border-[6px] border-white
+                    max-[520px]:-right-4 max-[520px]:-bottom-6
+                    max-[520px]:w-1/2"
+             data-edit-img="about-float"></div>
+      </div>
+
+      <!-- Columna derecha: Texto -->
+      <div>
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px]
+                  font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal"
+           data-i18n="about-eyebrow">
+          Quiénes somos
+        </p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08]
+                   tracking-tight mb-4 reveal"
+            data-i18n="about-h2">
+          Sobre A&J Imports
+        </h2>
+        <p class="text-ink-soft text-sm leading-relaxed mb-6
+                  max-w-[440px] reveal"
+           data-i18n="about-p">
+          Más de una década conectando clientes con vehículos y repuestos
+          importados, con procesos claros y seguimiento en cada etapa.
+        </p>
+
+        <!-- Feature 1 -->
+        <div class="flex items-center gap-3.5 mb-4 text-sm reveal">
+          <span class="w-7 h-7 rounded-full bg-ink flex items-center
+                       justify-center flex-none">
+            <svg class="w-3 h-3" fill="none" stroke="white"
+                 stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </span>
+          <span data-i18n="about-feat-1">Selección de vehículos de lujo</span>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="flex items-center gap-3.5 mb-4 text-sm reveal">
+          <span class="w-7 h-7 rounded-full bg-ink flex items-center
+                       justify-center flex-none">
+            <svg class="w-3 h-3" fill="none" stroke="white"
+                 stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </span>
+          <span data-i18n="about-feat-2">Entrega rápida y seguimiento</span>
+        </div>
+
+        <a href="#contacto" data-i18n="about-cta"
+           class="inline-flex items-center justify-center px-7 py-3.5
+                  rounded-full text-[13px] font-bold border-[1.5px]
+                  border-ink text-ink bg-transparent hover:bg-accent
+                  hover:text-on-accent hover:border-accent transition-all
+                  mt-3 reveal">
+          Conocer más
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       CATÁLOGO (Vehículos + Repuestos)
+       Tabs + Chips de filtro + Grid dinámico (JS)
+       ============================================ -->
+  <section id="catalogo" class="py-24 max-md:py-16 bg-paper-soft">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+
+      <!-- Encabezado -->
+      <div class="flex justify-between items-end flex-wrap gap-5 mb-11">
+        <div>
+          <p class="eyebrow-line flex items-center gap-2.5 text-[11px]
+                    font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal"
+             data-i18n="cat-eyebrow">
+            Recomendados para ti
+          </p>
+          <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08]
+                     tracking-tight reveal"
+              data-i18n="cat-h2">
+            Nuestra colección de vehículos premium
+          </h2>
+        </div>
+      </div>
+
+      <!-- Tabs Vehículos / Repuestos -->
+      <div class="flex gap-2.5 mb-4">
+        <button class="tab active px-5 py-2 rounded-full text-xs font-bold
+                       border-[1.5px] border-line text-muted cursor-pointer
+                       transition-all"
+                data-tab="vehicles" data-i18n="tab-vehiculos">
+          Vehículos
+        </button>
+        <button class="tab px-5 py-2 rounded-full text-xs font-bold
+                       border-[1.5px] border-line text-muted cursor-pointer
+                       transition-all"
+                data-tab="parts" data-i18n="tab-repuestos">
+          Repuestos
+        </button>
+      </div>
+
+      <!-- Chips de filtro -->
+      <div class="flex gap-2.5 flex-wrap mb-9">
+        <button class="chip px-4 py-2 rounded-full text-[11px] text-[#444]
+                       border-[1.5px] border-line cursor-pointer
+                       hover:border-ink transition-all"
+                data-i18n="chip-tipo">Tipo</button>
+        <button class="chip px-4 py-2 rounded-full text-[11px] text-[#444]
+                       border-[1.5px] border-line cursor-pointer
+                       hover:border-ink transition-all"
+                data-i18n="chip-precio">Precio</button>
+        <button class="chip px-4 py-2 rounded-full text-[11px] text-[#444]
+                       border-[1.5px] border-line cursor-pointer
+                       hover:border-ink transition-all"
+                data-i18n="chip-marca">Marca</button>
+        <button class="chip px-4 py-2 rounded-full text-[11px] text-[#444]
+                       border-[1.5px] border-line cursor-pointer
+                       hover:border-ink transition-all"
+                data-i18n="chip-nuevousado">Nuevo / usado</button>
+      </div>
+
+      <!-- Grid de Vehículos (visible por defecto) -->
+      <div id="vehiclesGrid"
+           class="grid grid-cols-6 gap-5 max-[1100px]:grid-cols-3
+                  max-md:grid-cols-2 max-[460px]:grid-cols-1 reveal">
+        <!-- Renderizado dinámicamente por index.js -->
+      </div>
+
+      <!-- Grid de Repuestos (oculto por defecto) -->
+      <div id="partsGrid"
+           class="grid grid-cols-6 gap-5 max-[1100px]:grid-cols-3
+                  max-md:grid-cols-2 max-[460px]:grid-cols-1 hidden mt-14 reveal">
+        <!-- Renderizado dinámicamente por index.js -->
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       BANNER CTA (Llamada a la acción)
+       ============================================ -->
+  <section class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+      <div class="banner-gradient rounded-xl overflow-hidden text-white
+                  px-14 py-16 max-md:px-6 max-md:py-10 reveal">
+        <p class="eyebrow-line eyebrow-line--white flex items-center gap-2.5
+                  text-[11px] font-bold tracking-[.14em] text-white/75
+                  uppercase mb-3.5"
+           data-i18n="banner-eyebrow">
+          Cotización fácil
+        </p>
+        <h3 class="text-[clamp(22px,3vw,30px)] font-bold leading-[1.08]
+                   max-w-[520px] mb-3"
+            data-i18n="banner-h3">
+          Inicia tu proceso de importación aquí
+        </h3>
+        <p class="text-[13.5px] text-white/85 max-w-[420px] mb-6"
+           data-i18n="banner-p">
+          Cotiza tu vehículo o repuesto en minutos, sin compromiso.
+        </p>
+        <a href="#contacto" data-i18n="banner-cta"
+           class="inline-flex items-center justify-center px-7 py-3.5
+                  rounded-full text-[13px] font-bold bg-white text-[#111]
+                  hover:-translate-y-0.5 transition-transform whitespace-nowrap">
+          Solicitar importación
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       SERVICIOS (Lista numerada con línea animada)
+       ============================================ -->
+  <section id="servicios" class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+
+      <div class="mb-14">
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px]
+                  font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal"
+           data-i18n="serv-eyebrow">
+          Recomendados
+        </p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08]
+                   tracking-tight reveal"
+            data-i18n="serv-h2">
+          Nuestros servicios de importación
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-3 gap-12 max-[800px]:grid-cols-1">
+
+        <!-- Servicio 1 -->
+        <div class="service-item reveal">
+          <span class="text-3xl font-extrabold text-[#dcdcdc] block mb-2">01</span>
+          <div class="service-rule w-full h-px bg-line mb-5"></div>
+          <h4 class="text-base font-bold mb-2.5" data-i18n="serv-1-h4">
+            Precios competitivos
+          </h4>
+          <p class="text-[13px] text-ink-soft leading-relaxed"
+             data-i18n="serv-1-p">
+            Tarifas claras y transparentes en cada importación, sin costos ocultos.
+          </p>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="service-item reveal reveal-delay-1">
+          <span class="text-3xl font-extrabold text-[#dcdcdc] block mb-2">02</span>
+          <div class="service-rule w-full h-px bg-line mb-5"></div>
+          <h4 class="text-base font-bold mb-2.5" data-i18n="serv-2-h4">
+            Variedad de vehículos
+          </h4>
+          <p class="text-[13px] text-ink-soft leading-relaxed"
+             data-i18n="serv-2-p">
+            Autos, carga, motos y maquinaria disponibles bajo pedido o en inventario.
+          </p>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="service-item reveal reveal-delay-2">
+          <span class="text-3xl font-extrabold text-[#dcdcdc] block mb-2">03</span>
+          <div class="service-rule w-full h-px bg-line mb-5"></div>
+          <h4 class="text-base font-bold mb-2.5" data-i18n="serv-3-h4">
+            Soporte 24/7
+          </h4>
+          <p class="text-[13px] text-ink-soft leading-relaxed"
+             data-i18n="serv-3-p">
+            Acompañamiento durante todo el proceso de aduana y entrega.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       ARTÍCULOS / BLOG
+       Grid de 3 columnas, renderizado por JS
+       ============================================ -->
+  <section class="py-24 max-md:py-16 bg-paper-soft">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+
+      <div class="flex justify-between items-end flex-wrap gap-6 mb-12">
+        <div>
+          <p class="eyebrow-line flex items-center gap-2.5 text-[11px]
+                    font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal"
+             data-i18n="art-eyebrow">
+            Últimos artículos
+          </p>
+          <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08]
+                     tracking-tight reveal"
+              data-i18n="art-h2">
+            Novedades del sector automotriz
+          </h2>
+          <p class="text-ink-soft text-[13.5px] max-w-[420px] mt-2.5 reveal"
+             data-i18n="art-p">
+            Guías y noticias sobre importación de vehículos y repuestos.
+          </p>
+        </div>
+        <a href="#servicios" data-i18n="btn-articles-cta"
+           class="inline-flex items-center justify-center px-7 py-3.5
+                  rounded-full text-[13px] font-bold border-[1.5px]
+                  border-ink text-ink bg-transparent hover:bg-accent
+                  hover:text-on-accent transition-all reveal">
+          Nuestros servicios
+        </a>
+      </div>
+
+      <div id="articlesGrid"
+           class="grid grid-cols-3 gap-6 max-[900px]:grid-cols-1 reveal">
+        <!-- Renderizado dinámicamente por index.js -->
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       CONTACTO (Formulario + Mapa)
+       ============================================ -->
+  <section id="contacto" class="py-24 max-md:py-16">
+    <div class="max-w-container mx-auto px-12 max-md:px-5
+                grid grid-cols-[1.15fr_1fr] gap-16
+                max-[900px]:grid-cols-1">
+
+      <!-- Columna izquierda: Formulario -->
+      <div>
+        <p class="eyebrow-line flex items-center gap-2.5 text-[11px]
+                  font-bold tracking-[.14em] text-muted uppercase mb-3.5 reveal"
+           data-i18n="contact-eyebrow">
+          Contacto
+        </p>
+        <h2 class="text-[clamp(26px,3.4vw,34px)] font-bold leading-[1.08]
+                   tracking-tight mb-8 reveal"
+            data-i18n="contact-h2">
+          Hablémoslo
+        </h2>
+
+        <form id="contactForm" class="reveal">
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold"
+                   data-i18n="field-nombre">Nombre</label>
+            <input type="text" data-i18n-placeholder="ph-nombre"
+                   placeholder="Tu nombre"
+                   class="w-full border-[1.5px] border-line rounded-md px-3.5
+                          py-3 text-[13px] text-ink bg-paper-soft
+                          focus:outline-none focus:border-ink transition-colors">
+          </div>
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold"
+                   data-i18n="field-correo">Correo</label>
+            <input type="email" placeholder="email@ejemplo.com"
+                   class="w-full border-[1.5px] border-line rounded-md px-3.5
+                          py-3 text-[13px] text-ink bg-paper-soft
+                          focus:outline-none focus:border-ink transition-colors">
+          </div>
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold"
+                   data-i18n="field-telefono">Teléfono</label>
+            <input type="tel" placeholder="+58 412 000 0000"
+                   class="w-full border-[1.5px] border-line rounded-md px-3.5
+                          py-3 text-[13px] text-ink bg-paper-soft
+                          focus:outline-none focus:border-ink transition-colors">
+          </div>
+          <div class="mb-5">
+            <label class="block text-[11px] text-muted mb-2 font-semibold"
+                   data-i18n="field-mensaje">Mensaje</label>
+            <textarea data-i18n-placeholder="ph-mensaje"
+                      placeholder="Cuéntanos qué vehículo o repuesto buscas"
+                      rows="4"
+                      class="w-full border-[1.5px] border-line rounded-md px-3.5
+                             py-3 text-[13px] text-ink bg-paper-soft
+                             focus:outline-none focus:border-ink
+                             transition-colors resize-y min-h-[100px]"></textarea>
+          </div>
+          <button type="submit" data-i18n="btn-enviar"
+                  class="w-full inline-flex items-center justify-center px-7
+                         py-3.5 rounded-full text-[13px] font-bold bg-accent
+                         text-on-accent hover:opacity-85 transition-opacity">
+            Enviar
+          </button>
+        </form>
+      </div>
+
+      <!-- Columna derecha: Mapa + Redes -->
+      <div class="reveal">
+        <div class="img-placeholder aspect-video rounded-xl mb-5
+                    bg-gradient-to-br from-[#d4d4d4] to-[#b8b8b8]
+                    flex items-center justify-center text-[11px]
+                    font-bold text-[#666] tracking-wider"
+             data-i18n="map-label" data-edit-img="map">
+          MAPA / UBICACIÓN
+        </div>
+        <a href="#"
+           class="block w-full mb-5 text-center px-7 py-3.5 rounded-full
+                  text-[13px] font-bold bg-[#25D366] text-white
+                  hover:opacity-90 transition-opacity">
+          WhatsApp Business
+        </a>
+        <div class="flex gap-3">
+          <a href="#" class="w-[38px] h-[38px] rounded-full border-[1.5px]
+                            border-line flex items-center justify-center
+                            hover:bg-accent hover:border-accent transition-all group">
+            <svg class="w-4 h-4 stroke-[#555] group-hover:stroke-on-accent transition-colors" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="#" class="w-[38px] h-[38px] rounded-full border-[1.5px]
+                            border-line flex items-center justify-center
+                            hover:bg-accent hover:border-accent transition-all group">
+            <svg class="w-4 h-4 stroke-[#555] group-hover:stroke-on-accent transition-colors" fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+          </a>
+          <a href="#" class="w-[38px] h-[38px] rounded-full border-[1.5px]
+                            border-line flex items-center justify-center
+                            hover:bg-accent hover:border-accent transition-all group">
+            <svg class="w-4 h-4 stroke-[#555] group-hover:stroke-on-accent transition-colors" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================
+       FOOTER (Siempre oscuro, bg-[#111] fijo)
+       ============================================ -->
+  <footer class="bg-[#111] text-white pt-[70px] pb-[30px]">
+    <div class="max-w-container mx-auto px-12 max-md:px-5">
+
+      <div class="grid grid-cols-[1.3fr_1fr_1fr_1fr] gap-10 mb-[50px]
+                  max-[800px]:grid-cols-2">
+        <!-- Col 1: Logo + descripción -->
+        <div>
+          <div class="text-[17px] font-extrabold tracking-wide mb-3.5">
+            A&J IMPORTS
+          </div>
+          <p class="text-[12.5px] text-[#999] leading-relaxed max-w-[280px]"
+             data-i18n="footer-desc">
+            Vehículos y repuestos importados, con garantía y soporte completo.
+          </p>
+        </div>
+        <!-- Col 2: Enlaces -->
+        <div>
+          <h5 class="text-xs font-bold mb-4 tracking-wide"
+              data-i18n="footer-col-links">Enlaces</h5>
+          <a href="#inicio" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-inicio">Inicio</a>
+          <a href="#nosotros" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-nosotros">Nosotros</a>
+          <a href="#servicios" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-servicios">Servicios</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="footer-blog">Blog</a>
+        </div>
+        <!-- Col 3: Soporte -->
+        <div>
+          <h5 class="text-xs font-bold mb-4 tracking-wide"
+              data-i18n="footer-col-support">Soporte</h5>
+          <a href="#catalogo" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="footer-precios">Precios</a>
+          <a href="#contacto" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="nav-contacto">Contacto</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors" data-i18n="footer-preguntas">Preguntas</a>
+        </div>
+        <!-- Col 4: Redes sociales -->
+        <div>
+          <h5 class="text-xs font-bold mb-4 tracking-wide"
+              data-i18n="footer-col-follow">Síguenos</h5>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors">Facebook</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors">Instagram</a>
+          <a href="#" class="block text-[12.5px] text-[#999] mb-3 hover:text-white transition-colors">WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- Línea inferior -->
+      <div class="flex justify-between flex-wrap gap-3 border-t
+                  border-[#2a2a2a] pt-6 text-[11.5px] text-[#777]">
+        <span>© 2026 A&J Imports Motors C.A.</span>
+        <div class="flex gap-3">
+          <a href="#" class="hover:text-white transition-colors"
+             data-i18n="footer-terms">Términos</a>
+          <span>|</span>
+          <a href="#" class="hover:text-white transition-colors"
+             data-i18n="footer-privacy">Privacidad</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================
+       MODO EDICIÓN (CMS Visual del cliente)
+       Toolbar flotante + botón toggle
+       ============================================ -->
+  <button id="editToggleBtn"
+          class="fixed right-5 bottom-5 z-[9998] bg-[#111] text-white
+                 border-none rounded-full w-[52px] h-[52px] text-xl
+                 cursor-pointer shadow-xl hover:scale-105 transition-transform">
+    ✎
+  </button>
+
+  <div id="editToolbar"
+       class="fixed right-5 bottom-5 z-[9999] bg-[#111] text-white
+              rounded-2xl p-3.5 shadow-2xl hidden flex-col gap-2 w-[196px]">
+    <div class="text-[11px] font-bold tracking-wider text-[#999] uppercase mb-1">
+      Modo edición
+    </div>
+    <button id="etSave"
+            class="text-xs font-bold rounded-lg border-none px-3 py-2.5
+                   cursor-pointer text-left bg-[#222] text-white
+                   hover:opacity-80 transition-opacity">
+      💾 Guardar cambios
+    </button>
+    <button id="etExport"
+            class="text-xs font-bold rounded-lg border-none px-3 py-2.5
+                   cursor-pointer text-left bg-[#222] text-white
+                   hover:opacity-80 transition-opacity">
+      ⬇ Descargar HTML
+    </button>
+    <button id="etReset"
+            class="text-xs font-bold rounded-lg border-none px-3 py-2.5
+                   cursor-pointer text-left bg-[#222] text-red-400
+                   hover:opacity-80 transition-opacity">
+      ↺ Restablecer
+    </button>
+    <div id="editStatus" class="text-[10.5px] text-[#aaa] leading-snug">
+      Clic en un texto para editarlo. Clic en una imagen para reemplazarla.
+    </div>
+  </div>
+
+  <!-- Input oculto para subida de imágenes en modo edición -->
+  <input type="file" id="imgFileInput" accept="image/*" class="hidden">
+
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script src="js/index.js"></script>
+
+</body>
+</html>
